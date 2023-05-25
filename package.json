@@ -1,0 +1,25 @@
+{
+  "name": "yzob-update",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@unocss/reset": "^0.52.3",
+    "element-plus": "^2.3.5",
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.3",
+    "@iconify/json": "^2.2.69",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "eslint": "^8.41.0",
+    "unocss": "^0.52.3",
+    "vite": "^4.3.2"
+  }
+}
