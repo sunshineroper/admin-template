@@ -9,7 +9,9 @@
         <tools />
       </div>
     </div>
-    <div class="flex-1" />
+    <div class="flex-1">
+      <router-view />
+    </div>
   </div>
 </template>
 <script setup>
