@@ -5,7 +5,7 @@
         <folder-silder class="mr-8" />
         <bread-crumb />
       </div>
-      <div class="py-4">
+      <div class="py-4 mr-2">
         <tools />
       </div>
     </div>
