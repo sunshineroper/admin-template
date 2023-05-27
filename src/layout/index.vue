@@ -6,7 +6,7 @@
       class="w-[210px] bg-[#545c64]"
       style="box-shadow:2px 0 6px rgba(0,21,41,.3);"
     />
-    <Appmain class="flex-1 bg-light-50" />
+    <Appmain class="flex-1 bg-light-50 overflow-y-auto" />
   </div>
 </template>
 <script setup>

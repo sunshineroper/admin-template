@@ -38,7 +38,7 @@ const router = useRouter()
 const login = ref({})
 const loading = ref(false)
 const handleClickLogin = () => {
-  router.push({ path: '/'})
+  router.push({ path: '/layout/dashboard'})
 }
 </script>
 <style scoped>
