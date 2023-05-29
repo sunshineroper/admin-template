@@ -79,8 +79,8 @@ const setHistory = (router) => {
       params,
       meta,
     })
-    currentTabName.value = name
   }
+  currentTabName.value = name
   cookies.set('histories', histories.value)
 }
 

@@ -2,7 +2,7 @@
 </script>
 <template>
   <div class="flex w-screen h-screen">
-    <slider
+    <layout-aside
       class="w-[210px] bg-[#545c64]"
       style="box-shadow:2px 0 6px rgba(0,21,41,.3);"
     />
@@ -10,6 +10,6 @@
   </div>
 </template>
 <script setup>
+import LayoutAside from './aside/index.vue'
 import Appmain from './components/main.vue'
-import slider from './components/slider.vue'
 </script>
