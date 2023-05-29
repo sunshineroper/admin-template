@@ -35,14 +35,15 @@ onMounted(() => {
     currentTabName.value = currentTab.name
 })
 
-function changeRouter(r) {
+const changeRouter = (r) => {
   const { name, params, query } = r
 
   router.push({ name, params, query })
   currentTabName.value = name
   cookies.set('currentTab', r)
 }
-function onHandleCloseClick(name) {
+
+const onHandleCloseClick = (name) => {
   const idx = histories.value.findIndex(item => item.name === name)
   let currentTab
   if (idx !== -1) {
@@ -66,7 +67,7 @@ function onTagsTabClick({ index }) {
     changeRouter(currentTab)
 }
 
-function setHistory(router) {
+const setHistory = (router) => {
   const { path, params, name, query, meta } = router
   const flag = histories.value.some(item => item.path === path)
   if (!flag) {
@@ -78,19 +79,20 @@ function setHistory(router) {
       params,
       meta,
     })
+    currentTabName.value = name
   }
   cookies.set('histories', histories.value)
 }
 
-watch(() => route, (to) => {
+watch(() => route, (to, now) => {
   setHistory(to)
 }, { deep: true })
 
 watch(() => histories, (val) => {
-  console.log(val.value.length)
   if (val.value.length === 0)
     store.changeTagsTable(false)
   else
     store.changeTagsTable(true)
 }, { deep: true })
+
 </script>

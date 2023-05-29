@@ -4,7 +4,10 @@
     "plugin:vue/recommended"
   ],
   "rules": {
-    "vue/multi-word-component-names": "off"
+    "vue/multi-word-component-names": "off",
+    "import/named": "off",
+    "antfu/top-level-function": "off",
+    "no-invalid-this": "off"
   }
   
 }
