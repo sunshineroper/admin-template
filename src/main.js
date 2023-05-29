@@ -6,6 +6,7 @@ import 'uno.css'
 import App from './App.vue'
 import router from '@/router'
 import pinia from '@/store'
+import '@/permissions'
 
 const app = createApp(App)
 app.use(ElementPlus)

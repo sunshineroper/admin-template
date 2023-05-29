@@ -17,15 +17,33 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-input v-model="login.region" type="password" class="relative" />
+          <el-input
+            v-model="login.region"
+            type="password"
+            class="relative"
+          />
           <div class="absolute right-4">
             <div class="i-mdi-eye-off-outline cursor-pointer" />
           </div>
         </el-form-item>
       </el-form>
       <div class="flex">
-        <el-button class="flex-1" type="primary" size="large">初始化</el-button>
-        <el-button class="flex-1" type="primary" size="large" :loading="loading" @click="handleClickLogin">登录</el-button>
+        <el-button
+          class="flex-1"
+          type="primary"
+          size="large"
+        >
+          初始化
+        </el-button>
+        <el-button
+          class="flex-1"
+          type="primary"
+          size="large"
+          :loading="loading"
+          @click="handleClickLogin"
+        >
+          登录
+        </el-button>
       </div>
     </div>
   </div>
@@ -34,11 +52,15 @@
 import { ref } from 'vue'
 import { User } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
+import { userStore } from '@/store/modules/user'
+
 const router = useRouter()
+const store = userStore()
 const login = ref({})
 const loading = ref(false)
 const handleClickLogin = () => {
-  router.push({ path: '/layout/dashboard'})
+  store.changeIsLogin(true)
+  router.push({ path: '/' })
 }
 </script>
 <style scoped>
