@@ -27,12 +27,16 @@ const router = useRouter()
 const histories = ref([])
 const cookies = useCookies(['locale'])
 
-onMounted(() => {
+const initHistories = () => {
   if (histories.value.length === 0 && cookies.get('histories'))
     histories.value = cookies.get('histories')
   const currentTab = cookies.get('currentTab')
   if (currentTab)
     currentTabName.value = currentTab.name
+}
+
+onMounted(() => {
+  initHistories()
 })
 
 const changeRouter = (r) => {
@@ -84,15 +88,18 @@ const setHistory = (router) => {
   cookies.set('histories', histories.value)
 }
 
-watch(() => route, (to, now) => {
+watch(() => route, (to, from) => {
+  if (!from)
+    initHistories()
+
   setHistory(to)
-}, { deep: true })
+}, { deep: true, immediate: true })
 
 watch(() => histories, (val) => {
   if (val.value.length === 0)
     store.changeTagsTable(false)
   else
     store.changeTagsTable(true)
-}, { deep: true })
+}, { deep: true, immediate: true })
 
 </script>

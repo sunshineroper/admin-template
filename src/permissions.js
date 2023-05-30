@@ -9,12 +9,16 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
   if (store.isLogin) {
     if (to.name === 'login') {
-      next('/')
+      next({ name: 'dashboard' })
       NProgress.done()
     }
-    const roleTreeRouter = store.roleTreeRouter
-    if (roleTreeRouter.length > 0)
-      loadRouter(router, roleTreeRouter)
+    const roleRouter = store.roleRouter
+    if (store.roleTreeRouter.length === 0) {
+      store.setRoleTreeRouter()
+      loadRouter(router, roleRouter)
+      next({ path: to.path })
+    }
+
     next()
     NProgress.done()
   }

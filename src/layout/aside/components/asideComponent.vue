@@ -23,7 +23,6 @@
   </el-menu-item>
 </template>
 <script setup>
-import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import asideComponent from './asideComponent.vue'
 

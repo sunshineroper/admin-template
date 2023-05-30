@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
-import { normalizeTree } from '@/utils/load-router'
+import { getMatchedTitle, normalizeTree } from '@/utils/util'
 
 export const userStore = defineStore('user', {
   state: () => {
@@ -35,12 +35,13 @@ export const userStore = defineStore('user', {
         id: 101,
         pid: 2,
         hidden: false,
+        noCache: true,
         path: '/edit',
         name: 'userEdit',
-        componentPath: 'test/test1',
+        componentPath: 'user/edit',
         meta: {
           icon: '',
-          title: '用户列表',
+          title: '用户信息修改',
         },
       },
       {
@@ -66,18 +67,37 @@ export const userStore = defineStore('user', {
           title: '测试页2',
         },
       }],
+      roleTreeRouter: [],
     }
   },
   actions: {
     changeIsLogin(bool) {
       this.isLogin = bool
     },
+    setRoleTreeRouter() {
+      normalizeTree(this.roleRouter, 0, this.roleTreeRouter)
+    },
   },
   getters: {
-    roleTreeRouter: ({ roleRouter }) => {
-      const tree = []
-      normalizeTree(roleRouter, 0, tree)
-      return tree
+    breadCrumbList: ({ roleTreeRouter }) => {
+      return (name) => {
+        const matched = getMatchedTitle(roleTreeRouter, name)
+        let breadCrumbList = []
+        if (matched.length > 0) {
+          breadCrumbList = matched.map((item) => {
+            const obj = {}
+            if (item.children && item.children.length > 0)
+              obj.path = ''
+
+            else
+              obj.path = { path: item.path }
+
+            obj.title = item.meta.title
+            return obj
+          })
+        }
+        return breadCrumbList
+      }
     },
   },
 })

@@ -10,7 +10,7 @@ const routes = [{
   component: layout,
   path: '/',
   children: [{
-    path: 'dashboard',
+    path: '',
     name: 'dashboard',
     component: () => import('@/views/dashboard/index.vue'),
     meta: {
