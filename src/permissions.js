@@ -14,7 +14,6 @@ router.beforeEach((to, from, next) => {
     }
     const roleRouter = store.roleRouter
     if (store.roleTreeRouter.length === 0) {
-      store.setRoleTreeRouter()
       loadRouter(router, roleRouter)
       next({ path: to.path })
     }

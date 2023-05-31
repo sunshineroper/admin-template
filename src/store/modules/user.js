@@ -12,6 +12,7 @@ export const userStore = defineStore('user', {
         avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       },
       isLogin: useLocalStorage('isLogin', false),
+      isAdmin: useLocalStorage('isAdmin', true),
       roleRouter: [{
         id: 1,
         pid: 0,
@@ -24,43 +25,8 @@ export const userStore = defineStore('user', {
           icon: '',
           title: '测试页1',
         },
-      }, {
-        id: 2,
-        pid: 0,
-        hidden: false,
-        path: '/usermanager',
-        name: 'usermanager',
-        componentPath: 'test/test1',
-        meta: {
-          title: '用户管理',
-        },
-        // component: () => import('@/views/test/test1.vue')
       },
       {
-        id: 101,
-        pid: 2,
-        hidden: false,
-        noCache: true,
-        path: '/edit',
-        name: 'userEdit',
-        componentPath: 'user/edit',
-        meta: {
-          icon: '',
-          title: '用户信息修改',
-        },
-      },
-      {
-        id: 102,
-        pid: 2,
-        hidden: false,
-        path: '/group-list',
-        name: 'groupList',
-        componentPath: 'test/test2',
-        meta: {
-          icon: '',
-          title: '分组列表',
-        },
-      }, {
         id: 3,
         pid: 0,
         hidden: false,
@@ -79,8 +45,10 @@ export const userStore = defineStore('user', {
     changeIsLogin(bool) {
       this.isLogin = bool
     },
-    setRoleTreeRouter() {
+    setRoleTreeRouter(list) {
       normalizeTree(this.roleRouter, 0, this.roleTreeRouter)
+      if (list && Array.isArray(list))
+        this.roleTreeRouter = this.roleTreeRouter.concat(...list)
     },
     changeLoginOut() {
       this.isLogin = false
