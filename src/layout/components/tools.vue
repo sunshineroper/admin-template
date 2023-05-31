@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center">
     <div
-      class="i-logos-github-icon text-xl cursor-pointer mr-4"
+      class="i-logos-github-icon text-xl cursor-pointer mr-6"
       @click="onClickToRouter('test1')"
     />
     <div

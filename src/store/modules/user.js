@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
+import { useCookies } from '@vueuse/integrations/useCookies'
 import { getMatchedTitle, normalizeTree } from '@/utils/util'
 
+const cookies = useCookies(['locale'])
 export const userStore = defineStore('user', {
   state: () => {
     return {
-      userInfo: {},
-      isLogin: useLocalStorage(false),
+      userInfo: {
+        name: 'sunshine',
+        avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      },
+      isLogin: useLocalStorage('isLogin', false),
       roleRouter: [{
         id: 1,
         pid: 0,
@@ -76,6 +81,11 @@ export const userStore = defineStore('user', {
     },
     setRoleTreeRouter() {
       normalizeTree(this.roleRouter, 0, this.roleTreeRouter)
+    },
+    changeLoginOut() {
+      this.isLogin = false
+      cookies.remove('histories')
+      cookies.remove('currentTab')
     },
   },
   getters: {

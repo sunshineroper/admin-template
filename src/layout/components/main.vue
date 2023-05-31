@@ -6,8 +6,9 @@
           <folder-silder class="mr-8" />
           <bread-crumb />
         </div>
-        <div class="py-4 mr-2">
+        <div class="py-4 mr-2 flex">
           <tools />
+          <avatar class="ml-8 mr-4" />
         </div>
       </div>
       <el-scrollbar
@@ -28,6 +29,7 @@ import { computed } from 'vue'
 import folderSilder from './folder-slider.vue'
 import breadCrumb from './bread-crumb.vue'
 import tools from './tools.vue'
+import avatar from './avatar.vue'
 import tagsTab from '@/layout/tags-tab/index.vue'
 import { appStore } from '@/store/modules/app'
 
