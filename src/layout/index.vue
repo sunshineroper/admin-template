@@ -1,21 +1,18 @@
-<script setup>
-</script>
 <template>
-  <div class="flex w-screen h-screen">
-    <layout-aside
-      class="w-[210px] bg-[#041527]"
-      style="box-shadow:2px 0 6px rgba(0,21,41,.3);"
-      :style="sideCollapse ? 'width: 80px' : ''"
-    />
-    <Appmain class="flex-1 bg-light-50 overflow-y-auto" />
+  <div class="w-screen h-screen">
+    <layout-aside />
+    <layout-header />
+    <layout-main>
+      <ul>
+        <li v-for="i in 1000">
+          {{ i }}
+        </li>
+      </ul>
+    </layout-main>
   </div>
 </template>
 <script setup>
-import { computed } from 'vue'
-import LayoutAside from './aside/index.vue'
-import Appmain from './components/main.vue'
-import { appStore } from '@/store/modules/app'
-
-const appstore = appStore()
-const sideCollapse = computed(() => appstore.sideCollapse)
+import layoutAside from './aside/index.vue'
+import layoutHeader from './header/index.vue'
+import layoutMain from './main/index.vue'
 </script>
