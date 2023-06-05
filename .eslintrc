@@ -7,7 +7,8 @@
     "vue/multi-word-component-names": "off",
     "import/named": "off",
     "antfu/top-level-function": "off",
-    "no-invalid-this": "off"
+    "no-invalid-this": "off",
+    "vue/no-multiple-template-root": "off"
   }
   
 }

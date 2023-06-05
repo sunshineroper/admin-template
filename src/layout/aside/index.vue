@@ -2,12 +2,13 @@
   <div class="flex flex-col">
     <logo />
     <el-menu
-      active-text-color="#ffd04b"
-      background-color="#545c64"
+      active-text-color="#fff"
+      background-color="#041527"
       text-color="#fff"
       style="border-right: none;"
       :default-active="activeIndex"
       :collapse="sideCollapse"
+      class="layout-menu"
     >
       <aside-component
         v-for="router of routerInfo"
@@ -38,3 +39,14 @@ watch(() => route, (val) => {
 }, { deep: true, immediate: true })
 // const isCollapse = ref(true)
 </script>
+<style>
+.layout-menu  .is-active {
+  background: #579ef8 !important;
+}
+.layout-menu .is-opened .el-menu {
+  background-color: #0d0303 !important;
+}
+.layout-menu .el-sub-menu .el-menu-item  {
+  font-size: 12px !important;
+}
+</style>

@@ -12,12 +12,12 @@
         </div>
       </div>
       <el-scrollbar
-        :style="{ height: hasTagsTable ? '80px' : '0' }"
+        :style="{ height: hasTagsTable ? '40px' : '0' }"
       >
         <tags-tab />
       </el-scrollbar>
     </div>
-    <div class="flex-1 h-full w-full">
+    <div class="flex-1 h-full bg-[#f0f2f5] py-4 px-8 overflow-y-auto">
       <transition name="fade">
         <router-view />
       </transition>

@@ -1,11 +1,11 @@
 <template>
   <div class="flex items-center">
     <div
-      class="i-logos-github-icon text-xl cursor-pointer mr-6"
+      class="i-logos-github-icon text-base cursor-pointer mr-6"
       @click="onClickToRouter('test1')"
     />
     <div
-      class="i-ri-moon-line text-xl cursor-pointer"
+      class="i-ri-moon-line text-base cursor-pointer"
       @click="onClickToRouter('test2')"
     />
   </div>

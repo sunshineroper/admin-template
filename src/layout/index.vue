@@ -3,7 +3,7 @@
 <template>
   <div class="flex w-screen h-screen">
     <layout-aside
-      class="w-[210px] bg-[#545c64]"
+      class="w-[210px] bg-[#041527]"
       style="box-shadow:2px 0 6px rgba(0,21,41,.3);"
       :style="sideCollapse ? 'width: 80px' : ''"
     />

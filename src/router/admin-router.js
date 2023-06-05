@@ -9,10 +9,19 @@ const adminRouter = [{
     {
       path: '/sys/user-manager',
       name: 'user-manager',
-      component: () => import('@/views/sys-manager/user-manager/index.vue'),
+      component: () => import('@/views/user-manager/index.vue'),
       meta: {
         icon: '',
         title: '用户管理',
+      },
+    },
+    {
+      path: '/sys/user-group-manager',
+      name: 'user-group-manager',
+      component: () => import('@/views/user-group-manager/index.vue'),
+      meta: {
+        icon: '',
+        title: '用户组组管理',
       },
     },
   ],

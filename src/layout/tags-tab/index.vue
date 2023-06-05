@@ -56,7 +56,7 @@ const onHandleCloseClick = (name) => {
     else if (idx === 1 && histories.value.length === 2)
       currentTab = histories.value[idx - 1]
     else
-      currentTab = histories.value[idx + 1]
+      currentTab = histories.value[idx - 1]
 
     histories.value.splice(idx, 1)
   }
