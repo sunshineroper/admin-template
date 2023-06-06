@@ -1,0 +1,10 @@
+@use './main.scss';
+body {
+  font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'microsoft yahei', arial, STHeiTi,
+    sans-serif;
+
+    svg { display: inline-block;}
+
+    a { color:var(--el-color-primary)}
+    a:hover { text-decoration: underline;}
+}

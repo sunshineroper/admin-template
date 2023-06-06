@@ -3,8 +3,8 @@
     <el-switch
       v-model="darkVal"
       inline-prompt
-      :active-icon="Sunny"
-      :inactive-icon="Moon"
+      :active-icon="Moon"
+      :inactive-icon="Sunny"
       class="mr-4"
       style="--el-switch-on-color: #0960bd; --el-switch-off-color: #ff6600"
       @change="toggleDark()"

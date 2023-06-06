@@ -1,9 +1,9 @@
 <template>
   <div
-    class="box-border fixed top-0 left-[210px] right-0 backdrop-blur-sm bg-white/75 z-10 py-2 dark:bg-black/75"
+    class="box-border shadow-md fixed top-0 left-[200px] right-0 backdrop-blur-sm bg-white/75 z-10 dark:bg-black/75"
   >
-    <div class="mx-6 flex">
-      <div class="flex-1 flex">
+    <div class="mx-6 flex py-3">
+      <div class="flex-1 flex items-center">
         <folder-slider />
         <bread-crumb class="py-0.5 ml-4" />
       </div>

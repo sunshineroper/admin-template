@@ -1,19 +1,16 @@
 <template>
   <div
-    class="fixed left-0 top-0 bottom-0 bg-[#041527] w-[210px] bg-[#041527]"
-    style="box-shadow:2px 0 6px rgba(0,21,41,.3);"
+    class="fixed left-0 top-0 bottom-0 bg-white/75 w-[200px] dark:bg-black/75"
+
     :style="sideCollapse ? 'width: 80px' : ''"
   >
     <div class="flex flex-col">
       <logo />
       <el-menu
-        active-text-color="#fff"
-        background-color="#041527"
-        text-color="#fff"
-        style="border-right: none;"
+        style="height: calc(100vh - 60px);border-right: none;"
+        class="shadow bg-white/75 dark:bg-black/75 "
         :default-active="activeIndex"
         :collapse="sideCollapse"
-        class="layout-menu"
       >
         <aside-component
           v-for="router of routerInfo"

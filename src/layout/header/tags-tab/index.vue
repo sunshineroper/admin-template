@@ -1,18 +1,20 @@
 <template>
-  <el-tabs
-    v-model="currentTabName"
-    type="card"
-    closable
-    @tab-click="onTagsTabClick"
-    @tab-remove="onHandleCloseClick"
-  >
-    <el-tab-pane
-      v-for="item in histories"
-      :key="item.name"
-      :label="item.title"
-      :name="item.name"
-    />
-  </el-tabs>
+  <el-scrollbar :style="{ height: tagsTabHeight}">
+    <el-tabs
+      v-model="currentTabName"
+      type="card"
+      closable
+      @tab-click="onTagsTabClick"
+      @tab-remove="onHandleCloseClick"
+    >
+      <el-tab-pane
+        v-for="item in histories"
+        :key="item.name"
+        :label="item.title"
+        :name="item.name"
+      />
+    </el-tabs>
+  </el-scrollbar>
 </template>
 <script setup>
 import { onMounted, ref, watch } from 'vue'
@@ -27,6 +29,7 @@ const router = useRouter()
 const histories = ref([])
 const cookies = useCookies(['locale'])
 
+const tagsTabHeight = ref('56px')
 const initHistories = () => {
   if (histories.value.length === 0 && cookies.get('histories'))
     histories.value = cookies.get('histories')
@@ -96,10 +99,14 @@ watch(() => route, (to, from) => {
 }, { deep: true, immediate: true })
 
 watch(() => histories, (val) => {
-  if (val.value.length === 0)
+  if (val.value.length === 0) {
+    tagsTabHeight.value = '0px'
     store.changeTagsTable(false)
-  else
+  }
+  else {
     store.changeTagsTable(true)
+    tagsTabHeight.value = '56px'
+  }
 }, { deep: true, immediate: true })
 
 </script>

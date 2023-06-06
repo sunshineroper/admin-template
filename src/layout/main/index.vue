@@ -1,12 +1,14 @@
 <template>
   <div
-    :class="hasTagsTable ? 'pt-[96px]' : 'pt-[40px]'"
-    class="flex flex-col relative bottom-0 h-full ml-[210px] "
+    :class="hasTagsTable ? 'pt-[104px]' : 'pt-[65px]'"
+    class="flex flex-col relative bottom-0 h-full ml-[200px] "
   >
     <div class="flex-1 h-full bg-[#f0f2f5] py-6 px-8 overflow-y-auto">
-      <transition name="fade">
-        <router-view />
-      </transition>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
   </div>
 </template>
