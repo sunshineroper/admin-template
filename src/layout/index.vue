@@ -2,13 +2,7 @@
   <div class="w-screen h-screen">
     <layout-aside />
     <layout-header />
-    <layout-main>
-      <ul>
-        <li v-for="i in 1000">
-          {{ i }}
-        </li>
-      </ul>
-    </layout-main>
+    <layout-main />
   </div>
 </template>
 <script setup>

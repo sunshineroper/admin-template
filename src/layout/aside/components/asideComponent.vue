@@ -4,7 +4,7 @@
     index="1"
   >
     <template #title>
-      <el-icon><location /></el-icon>
+      <div class="mr-1 i-carbon-menu" />
       <span>{{ routerInfo.meta && routerInfo.meta.title }}</span>
     </template>
     <aside-component
@@ -18,7 +18,7 @@
     :index="routerInfo.name"
     @click="handleClick"
   >
-    <el-icon><icon-menu /></el-icon>
+    <div class="mr-1 i-carbon-menu" />
     <span>{{ routerInfo.meta && routerInfo.meta.title }}</span>
   </el-menu-item>
 </template>
