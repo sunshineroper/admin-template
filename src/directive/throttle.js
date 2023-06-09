@@ -1,6 +1,6 @@
 export default {
   mounted(el, binding) {
-    const timer = 300
+    const timer = binding.value || 500
     el.time = null
     el.addEventListener('click', () => {
       el.disabled = true
@@ -12,7 +12,7 @@ export default {
 
       el.time = setTimeout(() => {
         el.disabled = false
-      }, 5000)
+      }, timer)
     })
   },
 }

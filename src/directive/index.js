@@ -5,11 +5,11 @@ const moduleVal = new Map()
 Object.keys(modules).forEach((key) => {
   if (key && modules[key]) {
     const newKey = key.replace(/^\.\/|\.ts|\.js/g, '')
-    moduleVal.set(newKey, modules[key].default)
+    moduleVal.set(newKey.substring(newKey.lastIndexOf('/') + 1, newKey.length), modules[key].default)
   }
 })
 export default (app) => {
   moduleVal.forEach((value, key) => {
-    app.directive('throttle', value)
+    app.directive(key, value)
   })
 }

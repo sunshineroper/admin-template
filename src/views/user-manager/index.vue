@@ -34,10 +34,8 @@
         新增
       </el-button>
       <el-button
-        v-throttle
         link
         type="primary"
-        @click="throttleTest"
       >
         重置密码
       </el-button>
@@ -127,9 +125,7 @@ const onClickAdd = () => {
   router.push({ name: 'user-manager-add-user' })
 }
 const currentPage1 = ref(5)
-const throttleTest = () => {
-  console.log('300')
-}
+
 const tableData = ref([
   {
     name: '项目员119',
