@@ -13,32 +13,10 @@ export const userStore = defineStore('user', {
       },
       isLogin: useLocalStorage('isLogin', false),
       isAdmin: useLocalStorage('isAdmin', true),
-      roleRouter: [{
-        id: 1,
-        pid: 0,
-        hidden: false,
-        path: 'test1',
-        name: 'test1',
-        componentPath: 'test/test1',
-        // component: () => import('@/views/test/test1.vue'),
-        meta: {
-          icon: '',
-          title: '测试页1',
-        },
-      },
-      {
-        id: 3,
-        pid: 0,
-        hidden: false,
-        path: '/test2',
-        name: 'test2',
-        componentPath: 'test/test2',
-        // component: () => import('@/views/test/test2.vue'),
-        meta: {
-          title: '测试页2',
-        },
-      }],
+      roleRouter: [],
       roleTreeRouter: [],
+      accessToken: useLocalStorage('accessToken', ''),
+      refreshToken: useLocalStorage('refreshToken', ''),
     }
   },
   actions: {
@@ -55,13 +33,19 @@ export const userStore = defineStore('user', {
       cookies.remove('histories')
       cookies.remove('currentTab')
     },
+    setAccessToken(val) {
+      this.accessToken = val
+    },
+    setRefreshToken(val) {
+      this.refreshToken = val
+    },
   },
   getters: {
     breadCrumbList: ({ roleTreeRouter }) => {
       return (name) => {
         const matched = getMatchedTitle(roleTreeRouter, name)
         let breadCrumbList = []
-        if (matched.length > 0) {
+        if (matched && matched.length > 0) {
           breadCrumbList = matched.map((item) => {
             const obj = {}
             if (item.children && item.children.length > 0)

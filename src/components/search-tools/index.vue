@@ -11,11 +11,11 @@
     />
   </el-tooltip>
   <el-tooltip
-    v-throttle="1000"
     effect="dark"
     content="刷新"
   >
     <el-button
+      v-throttle="1000"
       circle
       :icon="Refresh"
     />

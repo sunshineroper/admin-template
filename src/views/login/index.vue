@@ -50,19 +50,29 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+
 import { User } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
+
+// import { useRouter } from 'vue-router'
+import { Public } from '@/api/public'
 import { userStore } from '@/store/modules/user'
 
-const router = useRouter()
+// const router = useRouter()
 const store = userStore()
 const login = ref({})
 const loading = ref(false)
-const handleClickLogin = () => {
+
+const handleClickLogin = async () => {
+  // loading.value = true
+  const { accessToken, refreshToken } = await Public.login()
+  // loading.value = false
   store.changeIsLogin(true)
-  router.push({ path: '/' })
+  store.setAccessToken(accessToken)
+  store.setRefreshToken(refreshToken)
+  // router.push({ path: '/' })
 }
 </script>
+
 <style scoped>
 .login-container {
   background-image: url('@/assets/img/login-bg.jpg');
