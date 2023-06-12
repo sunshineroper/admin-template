@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { ElNotification } from 'element-plus'
+import qs from 'qs'
 import { userStore } from '@/store/modules/user'
 
 const peddingMap = new Map()
@@ -7,7 +8,7 @@ const requestPending = (config) => {
   const controller = new AbortController()
   config.signal = controller.signal
 
-  const key = `${config.method || ''}${config.url || ''}`
+  const key = `${config.method || ''}${config.url || ''}?${qs.stringify(config.body)}`
   if (peddingMap.has(key)) {
     // 重复的取消上一次请求,并且从pedingMap中删除
     peddingMap.get(key).abort()
@@ -34,7 +35,7 @@ service.interceptors.request.use((config) => {
 })
 service.interceptors.response.use((response) => {
   const { status, data } = response
-  const key = `${response.config.method}${response.config.url}`
+  const key = `${response.config.method}${response.config.url}?${qs.stringify(config.body)}`
   peddingMap.delete(key)
   if (status.toString().charAt(0) === '2')
     return data
