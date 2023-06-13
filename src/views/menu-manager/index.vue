@@ -29,9 +29,11 @@
       <el-button
         link
         type="primary"
-        @click="onClickAdd"
+        @click="handleClick"
       >
-        <div class="i-carbon-add text-2xl" />新增
+        <div
+          class="i-carbon-add text-2xl"
+        />新增
       </el-button>
     </div>
     <el-table
@@ -72,7 +74,7 @@
         label="操作"
         width="120"
       >
-        <template #default>
+        <template #default="scope">
           <el-tooltip
             effect="dark"
             content="修改"
@@ -81,6 +83,7 @@
               link
               type="primary"
               size="small"
+              @click="handleClick(scope.row)"
             >
               <div class="i-carbon-edit text-xl" />
             </el-button>
@@ -111,25 +114,33 @@
       />
     </div>
   </div>
+  <add-edit
+    v-model="dialogVisible"
+    :select-val="selectVal"
+  />
 </template>
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
 
-const router = useRouter()
+const dialogVisible = ref(false)
+const selectVal = ref({})
+const handleClick = (row) => {
+  if (row && row.id)
+    selectVal.value = row
 
-const onClickAdd = () => {
-  router.push({ name: 'user-manager-add-user' })
+  dialogVisible.value = true
 }
+
 const currentPage1 = ref(5)
 
 const tableData = ref([{
-  id: 0,
+  id: 1,
   title: '系统管理',
   icon: '',
   children: [{
-    id: 1,
+    id: 2,
     title: '菜单管理',
     icon: '',
   }],
