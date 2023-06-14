@@ -22,7 +22,9 @@
     "save": "^2.9.0",
     "universal-cookie": "^4.0.4",
     "vue": "^3.2.47",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vxe-table": "^4.4.1",
+    "xe-utils": "^3.5.11"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.3",

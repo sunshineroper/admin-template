@@ -5,22 +5,11 @@
     width="50%"
     :close="handleClose"
   >
-    {{ selectVal }}
     <el-form
       :model="form"
     >
       <el-form-item label="上级菜单">
-        <el-select
-          v-model="form.pid"
-          placeholder="Select"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
+        <el-tree-select />
       </el-form-item>
       <el-form-item label="菜单类型">
         <el-radio-group
@@ -116,7 +105,7 @@
         </el-button>
         <el-button
           type="primary"
-          @click="isVisible = false"
+          @click="onConfirmClick"
         >
           确定
         </el-button>
@@ -126,7 +115,8 @@
 </template>
 <script setup>
 import { useVModel } from '@vueuse/core'
-import { defineEmits, defineProps, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
+import elTreeSelect from '@/components/el-tree-select/index.vue'
 
 const props = defineProps({
   modelValue: {
@@ -146,35 +136,18 @@ const form = ref({
   status: 1,
   hidden: 0,
 })
-const emit = defineEmits(['update:modelValue', ''])
-const isVisible = useVModel(props, 'modelValue', emit)
+const emits = defineEmits(['update:modelValue', 'onConfirm'])
+const isVisible = useVModel(props, 'modelValue', emits)
 
 const handleClose = () => {
   dialogVisible.value = false
 }
+const onConfirmClick = () => {
+  emits('onConfirm', form.value)
+}
+
 watch(() => props.selectVal, (obj) => {
   form.value = obj
 }, { deep: true })
-const options = ref([
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-])
+
 </script>

@@ -43,6 +43,12 @@ dependencies:
   vue-router:
     specifier: '4'
     version: 4.2.1(vue@3.3.4)
+  vxe-table:
+    specifier: ^4.4.1
+    version: 4.4.1(vue@3.3.4)(xe-utils@3.5.11)
+  xe-utils:
+    specifier: ^3.5.11
+    version: 3.5.11
 
 devDependencies:
   '@antfu/eslint-config':
@@ -4034,6 +4040,16 @@ packages:
       '@vue/server-renderer': 3.3.4(vue@3.3.4)
       '@vue/shared': 3.3.4
 
+  /vxe-table@4.4.1(vue@3.3.4)(xe-utils@3.5.11):
+    resolution: {integrity: sha512-yq19+sds2Av625YiS3vpYjdXUN2BFTAyboOT+v5yhi6sroR7WwOnH7jkJ7/Q4U6ZhCDT59u0UOGAPVT27/4OWQ==}
+    peerDependencies:
+      vue: ^3.2.28
+      xe-utils: ^3.5.0
+    dependencies:
+      vue: 3.3.4
+      xe-utils: 3.5.11
+    dev: false
+
   /watchpack@2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}
     engines: {node: '>=10.13.0'}
@@ -4125,6 +4141,10 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
+
+  /xe-utils@3.5.11:
+    resolution: {integrity: sha512-lyKc/lTBga1Zb63p+FED8mtxLnYIjSS8PVJM1N64NGdCu/3d1XubaVeke2p91RHssP0ExVAl2LUqZYperoz76Q==}
+    dev: false
 
   /xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
