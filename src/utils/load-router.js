@@ -1,22 +1,25 @@
 import { deepTree } from './util'
 import { userStore } from '@/store/modules/user'
-import adminRouter from '@/router/admin-router'
 
+const MENU_FOLDER = 1
 export const loadRouter = (router, routerList = []) => {
   const store = userStore()
 
   const module = import.meta.glob(('@/views/**/*.vue'))
 
   deepTree(routerList, (item) => {
-    item.component = module[`/src/views/${item.componentPath}.vue`]
+    item.component = module[`/src/views/${item.component_path}.vue`]
+    item.path = item.router_url
+    item.meta = {
+      title: item.title,
+      icon: item.icon,
+    }
   })
-  // 如果是admin用户的话加载adminRouter
-  if (store.isAdmin)
-    routerList = routerList.concat(...adminRouter)
 
   routerList.forEach((r) => {
-    router.addRoute('layout', r)
+    if (r.path && r.type !== MENU_FOLDER)
+      router.addRoute('layout', r)
   })
   // 生成侧边栏
-  store.setRoleTreeRouter(adminRouter)
+  store.setRoleTreeRouter()
 }

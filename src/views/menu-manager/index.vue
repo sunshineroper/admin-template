@@ -28,16 +28,44 @@
     >
       <vxe-column
         field="name"
-        title="app.body.label.name"
+        title="菜单名称"
         tree-node
-      />
-      <vxe-column
-        field="title"
-        title="标题"
       />
       <vxe-column
         field="icon"
         title="图标"
+      />
+      <vxe-column
+        field="hidden"
+        title="显示状态"
+      >
+        <template #default="{ row }">
+          <el-tag
+            :type="row.hidden ? 'error' : 'success'"
+          >
+            {{ row.hidden ? '隐藏' : '显示' }}
+          </el-tag>
+        </template>
+      </vxe-column>
+      <vxe-column
+        field="status"
+        title="是否启用"
+      >
+        <template #default="{ row }">
+          <el-tag
+            :type="row.status ? 'success' : 'error'"
+          >
+            {{ row.status ? '显示' : '隐藏' }}
+          </el-tag>
+        </template>
+      </vxe-column>
+      <vxe-column
+        field="title"
+        title="路由名称"
+      />
+      <vxe-column
+        field="sort"
+        title="排序"
       />
       <vxe-column
         field="date"
@@ -86,17 +114,29 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
+import { ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
+import { Admin as AdminApi } from '@/api/admin'
+import { userStore } from '@/store/modules/user'
 
+const store = userStore()
 const loading = ref(true)
-onMounted(() => {
-  setTimeout(() => {
-    loading.value = false
-  }, 1500)
-})
 const dialogVisible = ref(false)
 const selectVal = ref({})
+const tableData = ref([])
+
+const getMenuList = async () => {
+  loading.value = true
+  const list = await AdminApi.getMenuList()
+  tableData.value = list
+  loading.value = false
+  store.setRoleRouter(list)
+}
+
+onMounted(async () => {
+  await getMenuList()
+})
 const handleClick = (row) => {
   if (row && row.id)
     selectVal.value = row
@@ -104,18 +144,23 @@ const handleClick = (row) => {
   dialogVisible.value = true
 }
 
-const onConfirm = (val) => {
+const onConfirm = async (val) => {
+  const { code, message } = await AdminApi.addMenu(val)
+  if (code < 100) {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'success',
+    })
+  }
+  else {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'error',
+    })
+  }
+  await getMenuList()
 }
 
-const tableData = ref([{
-  id: 1,
-  title: '系统管理',
-  icon: '',
-},
-{
-  id: 2,
-  pid: 1,
-  title: '菜单管理',
-  icon: '',
-}])
 </script>

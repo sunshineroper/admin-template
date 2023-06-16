@@ -34,7 +34,7 @@ const props = defineProps({
 })
 
 const handleClick = ({ index }) => {
-  const path = props.routerInfo.path
+  const path = props.routerInfo.router_url
   path && router.push(path)
 }
 </script>

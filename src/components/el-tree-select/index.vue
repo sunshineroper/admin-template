@@ -14,7 +14,7 @@
     >
       <el-tree
         ref="treeRef"
-        :data="treeData"
+        :data="treeDataList"
         :props="defaultProps"
         node-key="id"
         @node-click="nodeClick"
@@ -23,10 +23,10 @@
   </el-select>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-const emits = defineEmits('onClick')
-defineProps({
+const emits = defineEmits('onClickSelectTree')
+const props = defineProps({
   treeData: {
     type: Array,
     default: () => {
@@ -78,7 +78,7 @@ const treeCurrentKey = (key) => {
 const nodeClick = (val) => {
   const { id, name } = val
   selectVal.value = name
-  emits('onClick', { id, name })
+  emits('onClickSelectTree', { id, name })
   treeCurrentKey()
   selectRef.value.blur()
 }
@@ -94,10 +94,20 @@ const allOptions = ref([{
 },
 ])
 
+const treeDataList = ref([{
+  id: 0,
+  name: '主类目',
+  children: [],
+}])
+
 const defaultProps = {
   children: 'children',
   label: 'name',
 }
+
+watch(() => props.treeData, (val) => {
+  treeDataList.value[0].children.push(...val)
+}, { deep: true, immediate: true })
 </script>
 <style lang="scss" scoped>
 .el-scrollbar .el-scrollbar__view .el-select-dropdown__item{

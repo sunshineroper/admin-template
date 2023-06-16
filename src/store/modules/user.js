@@ -23,7 +23,11 @@ export const userStore = defineStore('user', {
     changeIsLogin(bool) {
       this.isLogin = bool
     },
+    setRoleRouter(list) {
+      this.roleRouter = list
+    },
     setRoleTreeRouter(list) {
+      this.roleTreeRouter = []
       normalizeTree(this.roleRouter, 0, this.roleTreeRouter)
       if (list && Array.isArray(list))
         this.roleTreeRouter = this.roleTreeRouter.concat(...list)

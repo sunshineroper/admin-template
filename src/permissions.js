@@ -2,9 +2,10 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import router from '@/router'
 import { userStore } from '@/store/modules/user.js'
-import { loadRouter } from '@/utils/load-router.js'
+import { Admin as AdminApi } from '@/api/admin'
+import { loadRouter } from '@/utils/load-router'
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const store = userStore()
   NProgress.start()
   if (store.isLogin) {
@@ -12,9 +13,12 @@ router.beforeEach((to, from, next) => {
       next({ name: 'dashboard' })
       NProgress.done()
     }
+
     const roleRouter = store.roleRouter
-    if (store.roleTreeRouter.length === 0) {
-      loadRouter(router, roleRouter)
+    if (roleRouter.length === 0) {
+      const list = await AdminApi.getMenuList()
+      store.setRoleRouter(list)
+      loadRouter(router, list)
       next({ path: to.path })
     }
 

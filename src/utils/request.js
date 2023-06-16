@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { ElNotification } from 'element-plus'
 import qs from 'qs'
-import { userStore } from '@/store/modules/user'
+
+// import { userStore } from '@/store/modules/user'
 
 const peddingMap = new Map()
 const requestPending = (config) => {
@@ -17,7 +18,7 @@ const requestPending = (config) => {
 
   else { peddingMap.set(key, controller) }
 }
-const store = userStore()
+// const store = userStore()
 const config = {
   timeout: 1000 * 30,
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -29,7 +30,7 @@ const service = axios.create(config)
 service.interceptors.request.use((config) => {
   if (!config.repeatRequest)
     requestPending(config)
-  config.headers.authorization = `Bearer ${store.accessToken}`
+  // config.headers.authorization = `Bearer ${store.accessToken}`
   config.headers['Content-Type'] = 'application/json'
   return config
 })
@@ -65,11 +66,11 @@ export const get = (url, params = {}) => {
   })
 }
 
-export const post = (url, body = {}, params = {}) => {
+export const post = (url, data = {}, params = {}) => {
   return service({
     method: 'post',
     url,
-    body,
+    data,
     params,
   })
 }
