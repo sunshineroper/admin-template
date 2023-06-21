@@ -6,9 +6,14 @@
     :close="handleClose"
   >
     <el-form
+      ref="formRef"
       :model="form"
+      :rules="rules"
     >
-      <el-form-item label="上级菜单">
+      <el-form-item
+        label="上级菜单"
+        prop="pid"
+      >
         <el-tree-select
           v-model="form.pid"
           :data="treeData"
@@ -20,6 +25,8 @@
       <el-form-item label="菜单类型">
         <el-radio-group
           v-model="form.type"
+          prop="type"
+          @change="handleTypeChange"
         >
           <el-radio
             :label="1"
@@ -40,7 +47,10 @@
       </el-form-item>
       <el-row :gutter="12">
         <el-col :span="12">
-          <el-form-item label="菜单名称">
+          <el-form-item
+            label="菜单名称"
+            prop="name"
+          >
             <el-input v-model="form.name" />
           </el-form-item>
         </el-col>
@@ -52,12 +62,18 @@
       </el-row>
       <el-row :gutter="8">
         <el-col :span="12">
-          <el-form-item label="路由地址">
+          <el-form-item
+            label="路由地址"
+            prop="router_url"
+          >
             <el-input v-model="form.router_url" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="组件路径">
+          <el-form-item
+            label="组件路径"
+            prop="component_path"
+          >
             <el-input v-model="form.component_path" />
           </el-form-item>
         </el-col>
@@ -66,6 +82,7 @@
         <el-col :span="12">
           <el-form-item
             label="路由名称"
+            prop="router_name"
           >
             <el-input v-model="form.router_name" />
           </el-form-item>
@@ -74,6 +91,7 @@
         <el-col :span="12">
           <el-form-item
             label="菜单标题"
+            prop="title"
           >
             <el-input v-model="form.title" />
           </el-form-item>
@@ -81,7 +99,10 @@
       </el-row>
       <el-row :gutter="8">
         <el-col :span="12">
-          <el-form-item label="显示状态">
+          <el-form-item
+            label="显示状态"
+            prop="hidden"
+          >
             <el-radio-group
               v-model="form.hidden"
             >
@@ -99,7 +120,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="菜单状态">
+          <el-form-item
+            label="菜单状态"
+            prop="status"
+          >
             <el-radio-group
               v-model="form.status"
             >
@@ -138,8 +162,10 @@
 <script setup>
 import { useVModel } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
+import { commonRules, menuFolderRules } from './rules'
 import { userStore } from '@/store/modules/user'
 
+const MENU_FOLDER = 1
 const store = userStore()
 const props = defineProps({
   modelValue: {
@@ -166,6 +192,15 @@ const treeData = computed(() => {
   defaultTree[0].children.push(...store.roleTreeRouter)
   return defaultTree
 })
+const formRef = ref()
+const rules = ref(menuFolderRules)
+const handleTypeChange = (val) => {
+  if (val === MENU_FOLDER)
+    rules.value = menuFolderRules
+  else
+    rules.value = commonRules
+  formRef.value.resetFields()
+}
 const form = ref({
   type: 1,
   status: 1,
@@ -180,6 +215,7 @@ const reset = () => {
     hidden: 0,
     pid: 0,
   }
+  formRef.value && formRef.value.resetFields()
 }
 
 const emits = defineEmits(['update:modelValue', 'onConfirm'])
@@ -190,8 +226,12 @@ const handleClose = () => {
   isVisible.value = false
 }
 const onConfirmClick = () => {
-  emits('onConfirm', form.value)
-  handleClose()
+  formRef.value.validate((valid, fields) => {
+    if (valid) {
+      emits('onConfirm', form.value)
+      handleClose()
+    }
+  })
 }
 
 const title = computed(() => {
