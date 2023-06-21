@@ -70,6 +70,14 @@ export const get = (url, params = {}) => {
   })
 }
 
+export const _delete = (url, params = {}) => {
+  return service({
+    method: 'delete',
+    url,
+    params,
+  })
+}
+
 export const post = (url, data = {}, params = {}) => {
   return service({
     method: 'post',

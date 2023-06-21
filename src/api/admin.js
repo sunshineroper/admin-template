@@ -1,4 +1,4 @@
-import { get, post } from '@/utils/request'
+import { _delete, get, post } from '@/utils/request'
 
 export class Admin {
   static addMenu(data) {
@@ -7,5 +7,9 @@ export class Admin {
 
   static getMenuList() {
     return get('admin/menu/getMenuList')
+  }
+
+  static deleteMenu(id) {
+    return _delete (`admin/menu/deleteMenu/${id}`)
   }
 }

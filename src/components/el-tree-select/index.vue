@@ -30,36 +30,7 @@ const props = defineProps({
   treeData: {
     type: Array,
     default: () => {
-      return [
-        {
-          id: 0,
-          name: '主类目',
-          children: [
-            {
-              id: 1,
-              name: '系统管理',
-            },
-            {
-              id: 2,
-              name: '网站管理',
-            },
-            {
-              id: 3,
-              name: '项目管理',
-              children: [
-                {
-                  id: 4,
-                  name: '我的项目',
-                },
-                {
-                  id: 5,
-                  name: '协议管理',
-                },
-              ],
-            },
-          ],
-        },
-      ]
+      return []
     },
   },
 })
