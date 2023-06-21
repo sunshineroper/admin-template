@@ -1,10 +1,7 @@
 import { deepTree } from './util'
-import { userStore } from '@/store/modules/user'
 
 const MENU_FOLDER = 1
 export const loadRouter = (router, routerList = []) => {
-  const store = userStore()
-
   const module = import.meta.glob(('@/views/**/*.vue'))
 
   deepTree(routerList, (item) => {
@@ -20,6 +17,4 @@ export const loadRouter = (router, routerList = []) => {
     if (r.path && r.type !== MENU_FOLDER)
       router.addRoute('layout', r)
   })
-  // 生成侧边栏
-  store.setRoleTreeRouter()
 }

@@ -59,9 +59,23 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="菜单标题">
-        <el-input v-model="form.title" />
-      </el-form-item>
+      <el-row :gutter="8">
+        <el-col :span="12">
+          <el-form-item
+            label="路由名称"
+          >
+            <el-input v-model="form.router_name" />
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="12">
+          <el-form-item
+            label="菜单标题"
+          >
+            <el-input v-model="form.title" />
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-row :gutter="8">
         <el-col :span="12">
           <el-form-item label="显示状态">
@@ -103,7 +117,9 @@
     </el-form>
     <template #footer>
       <div>
-        <el-button @click="isVisible = false">
+        <el-button
+          @click="handleClose"
+        >
           取消
         </el-button>
         <el-button
@@ -160,16 +176,16 @@ const emits = defineEmits(['update:modelValue', 'onConfirm'])
 const isVisible = useVModel(props, 'modelValue', emits)
 
 const handleClose = () => {
+  reset()
   isVisible.value = false
 }
 const onConfirmClick = () => {
   emits('onConfirm', form.value)
-  reset()
   handleClose()
 }
 
 watch(() => props.selectVal, (obj) => {
   form.value = obj
-}, { deep: true })
+}, { deep: true, immediate: true })
 
 </script>

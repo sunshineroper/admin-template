@@ -5,7 +5,7 @@
   >
     <template #title>
       <div class="mr-1 i-carbon-menu" />
-      <span>{{ routerInfo.meta && routerInfo.meta.title }}</span>
+      <span>{{ routerInfo.name }}</span>
     </template>
     <aside-component
       v-for="router of routerInfo.children"
@@ -19,7 +19,7 @@
     @click="handleClick"
   >
     <div class="mr-1 i-carbon-menu" />
-    <span>{{ routerInfo.meta && routerInfo.meta.title }}</span>
+    <span>{{ routerInfo.name }}</span>
   </el-menu-item>
 </template>
 <script setup>

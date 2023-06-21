@@ -60,7 +60,7 @@
         </template>
       </vxe-column>
       <vxe-column
-        field="title"
+        field="router_name"
         title="路由名称"
       />
       <vxe-column
@@ -69,7 +69,7 @@
       />
       <vxe-column
         field="date"
-        title="Date"
+        title="创建时间"
       />
       <vxe-column
         title="操作"
@@ -146,7 +146,7 @@ const handleClick = (row) => {
 
 const onConfirm = async (val) => {
   const { code, message } = await AdminApi.addMenu(val)
-  if (code < 100) {
+  if (code && code < 100) {
     ElNotification({
       title: 'Tips',
       message,

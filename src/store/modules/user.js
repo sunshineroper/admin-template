@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
 import { useCookies } from '@vueuse/integrations/useCookies'
-import { getMatchedTitle, normalizeTree } from '@/utils/util'
+import { getMatchedTitle, normaizeHiddenTree, normalizeTree } from '@/utils/util'
 
 const cookies = useCookies(['locale'])
 export const userStore = defineStore('user', {
@@ -25,12 +25,19 @@ export const userStore = defineStore('user', {
     },
     setRoleRouter(list) {
       this.roleRouter = list
+      this.setRoleTreeRouter()
     },
-    setRoleTreeRouter(list) {
+    setRoleTreeRouter() {
       this.roleTreeRouter = []
       normalizeTree(this.roleRouter, 0, this.roleTreeRouter)
-      if (list && Array.isArray(list))
-        this.roleTreeRouter = this.roleTreeRouter.concat(...list)
+      const list = []
+      // 隐藏hidden为true的菜单
+      normaizeHiddenTree(this.roleTreeRouter, list, (item) => {
+        if (item.hidden === 1)
+          return true
+        return false
+      })
+      this.roleTreeRouter = list
     },
     changeLoginOut() {
       this.isLogin = false

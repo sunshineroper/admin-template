@@ -40,10 +40,14 @@ service.interceptors.response.use((response) => {
   peddingMap.delete(key)
   if (status.toString().charAt(0) === '2')
     return data
-  ElNotification({
-    title: 'Tips',
-    message: data.message,
-    type: 'error',
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
+    ElNotification({
+      title: 'Tips',
+      message: data.message,
+      type: 'error',
+    })
+    reject(data)
   })
 }, (error) => {
   let message = error.message

@@ -41,3 +41,24 @@ export const getMatchedTitle = (list, name) => {
     }
   }
 }
+
+export function normaizeHiddenTree(treeList, list, func) {
+  for (let i = 0; i < treeList.length; i++) {
+    const tree = treeList[i]
+    // eslint-disable-next-line max-statements-per-line
+    if (func(tree)) { break }
+    else if (tree.children && tree.children.length > 0) {
+      const newTree = {
+        ...tree,
+      }
+      newTree.children = []
+      normaizeHiddenTree(tree.children, newTree.children, func)
+      if (newTree.children.length === 0)
+        delete newTree.children
+      list.push(newTree)
+    }
+    else {
+      list.push(tree)
+    }
+  }
+}
