@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="isVisible"
-    title="新增菜单"
+    :title="title"
     width="50%"
     :close="handleClose"
   >
@@ -10,8 +10,11 @@
     >
       <el-form-item label="上级菜单">
         <el-tree-select
-          :tree-data="treeData"
-          @onClickSelectTree="onClickSelectTree"
+          v-model="form.pid"
+          :data="treeData"
+          :props="defaultProps"
+          check-strictly
+          node-key="id"
         />
       </el-form-item>
       <el-form-item label="菜单类型">
@@ -135,7 +138,6 @@
 <script setup>
 import { useVModel } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
-import elTreeSelect from '@/components/el-tree-select/index.vue'
 import { userStore } from '@/store/modules/user'
 
 const store = userStore()
@@ -151,7 +153,19 @@ const props = defineProps({
     },
   },
 })
-const treeData = computed(() => store.roleTreeRouter)
+const defaultProps = {
+  children: 'children',
+  label: 'name',
+}
+const treeData = computed(() => {
+  const defaultTree = [{
+    id: 0,
+    name: '主类目',
+    children: [],
+  }]
+  defaultTree[0].children.push(...store.roleTreeRouter)
+  return defaultTree
+})
 const form = ref({
   type: 1,
   status: 1,
@@ -168,10 +182,6 @@ const reset = () => {
   }
 }
 
-const onClickSelectTree = (val) => {
-  form.value.pid = val.id
-}
-
 const emits = defineEmits(['update:modelValue', 'onConfirm'])
 const isVisible = useVModel(props, 'modelValue', emits)
 
@@ -184,8 +194,16 @@ const onConfirmClick = () => {
   handleClose()
 }
 
+const title = computed(() => {
+  if (form.value.id && form.value.id !== 0)
+    return '修改菜单'
+  else
+    return '新增菜单'
+})
+
 watch(() => props.selectVal, (obj) => {
-  form.value = obj
+  if (obj.id)
+    form.value = obj
 }, { deep: true, immediate: true })
 
 </script>

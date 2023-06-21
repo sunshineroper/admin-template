@@ -125,7 +125,7 @@
   />
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
@@ -162,7 +162,7 @@ const handleDeleteClick = (row) => {
     loading.value = true
     let message = '请确定是否删除,删除后不可恢复'
     if (row.children.length > 0)
-      message = '当前被删除的菜单包含菜单,如果删除当前菜单,将会一同删除子菜单'
+      message = '当前被删除的菜单包含子菜单,如果删除当前菜单,将会一同删除子菜单'
 
     ElMessageBox.confirm(message, {
       title: '提醒',
@@ -199,7 +199,12 @@ const closeExpandEvent = () => {
 }
 
 const onConfirm = async (val) => {
-  // TODO 修改的时候如果选择的类目和之前的类目不一致,并且该菜单下有子菜单的情况,需要提示
+  // 修改的时候如果选择的类目和之前的类目不一致,并且该菜单下有子菜单的情况,需要提示
+  if (val.children > 0 && selectVal.value.pid !== val.pid) {
+    ElMessageBox.confirm('当前菜单包含子菜单,如果移动当前菜单目录的话,当前的菜单的子菜单会被一并移动', {
+      title: '提醒',
+    })
+  }
   const { code, message } = await AdminApi.addMenu(val)
   if (code && code < 100) {
     ElNotification({
@@ -217,5 +222,10 @@ const onConfirm = async (val) => {
   }
   await getMenuList()
 }
+
+watch(() => dialogVisible.value, (val) => {
+  if (!val)
+    selectVal.value = {}
+})
 
 </script>

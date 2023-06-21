@@ -33,6 +33,14 @@ const props = defineProps({
       return []
     },
   },
+  defaultKey: {
+    type: Number,
+    default: 0,
+  },
+  defaultVal: {
+    type: String,
+    default: '主类目',
+  },
 })
 
 const selectVal = ref('主类目')
@@ -50,7 +58,7 @@ const nodeClick = (val) => {
   const { id, name } = val
   selectVal.value = name
   emits('onClickSelectTree', { id, name })
-  treeCurrentKey()
+  treeCurrentKey(id)
   selectRef.value.blur()
 }
 
@@ -79,6 +87,7 @@ const defaultProps = {
 watch(() => props.treeData, (val) => {
   treeDataList.value[0].children.push(...val)
 }, { deep: true, immediate: true })
+
 </script>
 <style lang="scss" scoped>
 .el-scrollbar .el-scrollbar__view .el-select-dropdown__item{
