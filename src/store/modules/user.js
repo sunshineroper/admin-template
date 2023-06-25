@@ -15,7 +15,6 @@ export const userStore = defineStore('user', {
       isLogin: useLocalStorage('isLogin', false),
       isAdmin: useLocalStorage('isAdmin', true),
       roleRouter: [],
-      roleTreeRouter: [],
       accessToken: useLocalStorage('accessToken', ''),
       refreshToken: useLocalStorage('refreshToken', ''),
     }
@@ -26,18 +25,6 @@ export const userStore = defineStore('user', {
     },
     setRoleRouter(list) {
       this.roleRouter = list
-      this.setRoleTreeRouter()
-    },
-    setRoleTreeRouter() {
-      this.roleTreeRouter = []
-      normalizeTree(this.roleRouter, 0, this.roleTreeRouter)
-      const list = []
-      // 隐藏禁用status为 1 禁用的菜单 隐藏hidden为1的菜单
-      normaizeHiddenTree(this.roleTreeRouter, list, item => item.status === 0 || item.hidden === 1)
-      // 并且根据sort排序
-      this.roleTreeRouter = []
-      treeSort(list, (a, b) => a.sort - b.sort)
-      this.roleTreeRouter = list
     },
     changeLoginOut() {
       this.isLogin = false
@@ -52,9 +39,20 @@ export const userStore = defineStore('user', {
     },
   },
   getters: {
-    breadCrumbList: ({ roleTreeRouter }) => {
+    roleTreeRouter: ({ roleRouter }) => {
+      const roleTreeRouter = []
+      normalizeTree(roleRouter, 0, roleTreeRouter)
+
+      const list = []
+      // 隐藏禁用status为 1 禁用的菜单 隐藏hidden为1的菜单
+      normaizeHiddenTree(roleTreeRouter, list, item => item.status === 0 || item.hidden === 1)
+      // 并且根据sort排序
+      treeSort(list, (a, b) => a.sort - b.sort)
+      return list
+    },
+    breadCrumbList() {
       return (name) => {
-        const matched = getMatchedTitle(roleTreeRouter, name)
+        const matched = getMatchedTitle(this.roleTreeRouter, name)
         let breadCrumbList = []
         if (matched && matched.length > 0) {
           breadCrumbList = matched.map((item) => {

@@ -15,7 +15,10 @@
       </el-button>
       <div class="flex items-center mr-4" />
     </div>
-    <search-tools />
+    <search-tools
+      :tools="['refresh']"
+      @onClickRefresh="onClickRefresh"
+    />
   </div>
   <div class="bg-white rounded-md py-4 px-4">
     <div class="my-4">
@@ -148,6 +151,9 @@ const getMenuList = async () => {
   store.setRoleRouter(list)
 }
 
+const onClickRefresh = async () => {
+  await getMenuList()
+}
 onMounted(async () => {
   await getMenuList()
 })

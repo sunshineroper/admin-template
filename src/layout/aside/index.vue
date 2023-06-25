@@ -8,7 +8,7 @@
       <logo />
       <el-menu
         style="height: calc(100vh - 60px);border-right: none;"
-        class="shadow bg-white/75 dark:bg-black/75 "
+        class="shadow bg-white/75 dark:bg-black/75 overflow-y-auto "
         :default-active="activeIndex"
         :collapse="sideCollapse"
       >
