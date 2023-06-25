@@ -63,7 +63,7 @@ export const userStore = defineStore('user', {
             else
               obj.path = { path: item.path }
 
-            obj.title = item.meta.title
+            obj.title = item.title
             return obj
           })
         }
