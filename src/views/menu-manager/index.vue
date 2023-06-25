@@ -67,7 +67,7 @@
           <el-tag
             :type="row.status ? 'success' : 'error'"
           >
-            {{ row.status ? '显示' : '隐藏' }}
+            {{ row.status ? '启用' : '禁用' }}
           </el-tag>
         </template>
       </vxe-column>
@@ -78,6 +78,7 @@
       <vxe-column
         field="sort"
         title="排序"
+        sortable
       />
       <vxe-column
         field="date"

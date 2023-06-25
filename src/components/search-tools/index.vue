@@ -1,26 +1,25 @@
 <template>
-  <el-tooltip
-    effect="dark"
-    content="搜索"
-  >
-    <el-button
-      v-throttle="1000"
-      type="primary"
-      :icon="Search"
-      circle
+  <div>
+    <component
+      :is="tool"
+      v-for="tool in tools"
+      :key="tool"
     />
-  </el-tooltip>
-  <el-tooltip
-    effect="dark"
-    content="刷新"
-  >
-    <el-button
-      v-throttle="1000"
-      circle
-      :icon="Refresh"
-    />
-  </el-tooltip>
+    <slot />
+  </div>
 </template>
 <script setup>
-import { Refresh, Search } from '@element-plus/icons-vue'
+/* eslint-disable */
+import search from './search.vue'
+import refresh from './refersh.vue'
+// const props = defineProps({
+//   tools: {
+//     typeof: Array,
+//     default: () => {
+//       return ['search', 'refersh']
+//     },
+//   },
+// })
+
+const tools = [search, refresh]
 </script>

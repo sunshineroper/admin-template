@@ -60,6 +60,16 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-form-item
+        label="排序"
+        prop="sort"
+      >
+        <el-input-number
+          v-model="form.sort"
+          :min="0"
+          :max="99"
+        />
+      </el-form-item>
       <el-row :gutter="8">
         <el-col :span="12">
           <el-form-item
@@ -97,6 +107,7 @@
           </el-form-item>
         </el-col>
       </el-row>
+
       <el-row :gutter="8">
         <el-col :span="12">
           <el-form-item
@@ -160,7 +171,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { useVModel } from '@vueuse/core'
+import { useCloned, useVModel } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { commonRules, menuFolderRules } from './rules'
 import { userStore } from '@/store/modules/user'
@@ -242,8 +253,10 @@ const title = computed(() => {
 })
 
 watch(() => props.selectVal, (obj) => {
-  if (obj.id)
-    form.value = obj
+  if (obj.id) {
+    const { cloned } = useCloned(obj)
+    form.value = cloned.value
+  }
 }, { deep: true, immediate: true })
 
 </script>

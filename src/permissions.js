@@ -18,7 +18,7 @@ router.beforeEach(async (to, from, next) => {
     if (roleRouter.length === 0) {
       const list = await AdminApi.getMenuList()
       store.setRoleRouter(list)
-      loadRouter(router, list)
+      loadRouter(router, store.roleTreeRouter)
       next({ path: to.path })
     }
 

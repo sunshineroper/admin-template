@@ -16,4 +16,6 @@ delete menuFolderRules.component_path
 
 delete menuFolderRules.router_url
 
+delete menuFolderRules.router_name
+
 export { menuFolderRules }

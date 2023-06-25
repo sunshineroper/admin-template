@@ -1,3 +1,5 @@
+import { MENU_FOLDER } from './type'
+
 export const normalizeTree = (list, pid, tree) => {
   list.forEach((l) => {
     if (l.pid === pid) {
@@ -46,7 +48,7 @@ export function normaizeHiddenTree(treeList, list, func) {
   for (let i = 0; i < treeList.length; i++) {
     const tree = treeList[i]
     // eslint-disable-next-line max-statements-per-line
-    if (func(tree)) { break }
+    if (func(tree)) { continue }
     else if (tree.children && tree.children.length > 0) {
       const newTree = {
         ...tree,
@@ -61,4 +63,14 @@ export function normaizeHiddenTree(treeList, list, func) {
       list.push(tree)
     }
   }
+}
+
+export const treeSort = (list, sortFunc) => {
+  if (!sortFunc && typeof sortFunc !== 'function')
+    sortFunc = (a, b) => a - b
+  list.sort(sortFunc)
+  deepTree(list, (item) => {
+    if (item.type === MENU_FOLDER && item.children && item.children.length > 0)
+      item.children.sort(sortFunc)
+  })
 }
