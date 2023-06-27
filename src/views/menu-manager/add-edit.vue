@@ -162,7 +162,7 @@
         </el-button>
         <el-button
           type="primary"
-          @click="onConfirmClick"
+          @click="handleConfrim"
         >
           确定
         </el-button>
@@ -236,7 +236,7 @@ const handleClose = () => {
   reset()
   isVisible.value = false
 }
-const onConfirmClick = () => {
+const handleConfrim = () => {
   formRef.value.validate((valid, fields) => {
     if (valid) {
       emits('onConfirm', form.value)
@@ -257,6 +257,6 @@ watch(() => props.selectVal, (obj) => {
     const { cloned } = useCloned(obj)
     form.value = cloned.value
   }
-}, { deep: true, immediate: true })
+})
 
 </script>
