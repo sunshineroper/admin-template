@@ -9,6 +9,10 @@ export class Admin {
     return get('admin/menu/getMenuList')
   }
 
+  static getMenuByRouterName(query) {
+    return get('admin/menu/getMenuByRouterName', query)
+  }
+
   static deleteMenu(id) {
     return _delete (`admin/menu/deleteMenu/${id}`)
   }

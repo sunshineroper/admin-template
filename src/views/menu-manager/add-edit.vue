@@ -175,7 +175,23 @@ import { useCloned, useVModel } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { commonRules, menuFolderRules } from './rules'
 import { userStore } from '@/store/modules/user'
+import { Admin as AdminApi } from '@/api/admin'
 
+const form = ref({
+  type: 1,
+  status: 1,
+  hidden: 0,
+  pid: 0,
+})
+const validateRouterName = async (rule, value, callback) => {
+  if (!value)
+    callback(new Error('路由名称不能为空'))
+  const menu = await AdminApi.getMenuByRouterName({ router_name: value, id: form.value.id })
+  if (Object.keys(menu).length > 0)
+    callback(new Error('路由名称不能和其它菜单的重复'))
+
+  callback()
+}
 const MENU_FOLDER = 1
 const store = userStore()
 const props = defineProps({
@@ -206,18 +222,17 @@ const treeData = computed(() => {
 const formRef = ref()
 const rules = ref(menuFolderRules)
 const handleTypeChange = (val) => {
-  if (val === MENU_FOLDER)
+  rules.value = {}
+  if (val === MENU_FOLDER) {
     rules.value = menuFolderRules
-  else
+  }
+
+  else {
     rules.value = commonRules
+    rules.value.router_name = { required: true, trigger: 'blur', validator: validateRouterName }
+  }
   formRef.value.resetFields()
 }
-const form = ref({
-  type: 1,
-  status: 1,
-  hidden: 0,
-  pid: 0,
-})
 
 const reset = () => {
   form.value = {
