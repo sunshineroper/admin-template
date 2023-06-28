@@ -6,7 +6,7 @@
     />
   </div>
   <div class="bg-white rounded-md py-4 px-4">
-    <div class="my-4">
+    <!-- <div class="my-4">
       <el-button
         link
         type="primary"
@@ -16,7 +16,21 @@
           class="i-carbon-add text-2xl"
         />新增
       </el-button>
-    </div>
+    </div> -->
+
+    <vxe-toolbar>
+      <template #buttons>
+        <el-button
+          link
+          type="primary"
+          @click="handleAddClick"
+        >
+          <div
+            class="i-carbon-add text-2xl"
+          />新增
+        </el-button>
+      </template>
+    </vxe-toolbar>
     <vxe-table
       ref="xTreeRef"
       :loading="loading"
@@ -49,7 +63,7 @@
       />
       <vxe-column
         title="操作"
-        width="120"
+        width="190"
       >
         <template #default="{ row }">
           <el-tooltip
@@ -78,6 +92,19 @@
               <div class="i-carbon-trash-can text-xl" />
             </el-button>
           </el-tooltip>
+          <el-tooltip
+            effect="dark"
+            content="分配权限"
+          >
+            <el-button
+              link
+              size="small"
+              type="danger"
+              @click="handleDispatchPermissionsClick(row)"
+            >
+              <div class="i-carbon-trash-can text-xl" />
+            </el-button>
+          </el-tooltip>
         </template>
       </vxe-column>
     </vxe-table>
@@ -87,12 +114,14 @@
     :select-val="selectVal"
     @onConfirm="onConfirm"
   />
+  <dispatch-permissions v-model="dispatchPermissionsVisible" />
 </template>
 
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
+import dispatchPermissions from './dispatch-permissions.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
 
@@ -100,6 +129,7 @@ const loading = ref(false)
 const tableData = ref([])
 const dialogVisible = ref(false)
 const selectVal = ref({})
+const dispatchPermissionsVisible = ref(false)
 const getList = async () => {
   loading.value = true
   const list = await AdminApi.getRoleList()
@@ -151,6 +181,9 @@ const onConfirm = async (val) => {
   }
 }
 
+const handleDispatchPermissionsClick = () => {
+  dispatchPermissionsVisible.value = true
+}
 watch(dialogVisible, (val) => {
   if (!val)
     selectVal.value = {}
