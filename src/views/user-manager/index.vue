@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-sm mb-4 py-4 px-4 items-center flex">
+  <div class="flex bg-white rounded-sm mb-4 py-4 px-4 items-center">
     <div class="flex-1 flex">
       <div class="flex items-center mr-4">
         <div class="text-gray-600 text-sm mr-2">
@@ -22,14 +22,18 @@
         </div>
       </div>
     </div>
-    <search-tools />
+    <search-tools
+      :tools="['refresh']"
+      @onClickRefresh="onClickRefresh"
+    />
   </div>
+
   <div class="bg-white rounded-md py-4 px-4">
     <div class="my-4">
       <el-button
         link
         type="primary"
-        @click="onClickAdd"
+        @click="handleClickAdd"
       >
         新增
       </el-button>
@@ -46,93 +50,163 @@
         账号启用/停用
       </el-button>
     </div>
-    <el-table
-      :data="tableData"
-      style="width: 100%"
-      border
+    <vxe-table
+      ref="xTreeRef"
       :loading="loading"
+      empty-text="没有更多数据了！"
+      border="inner"
+      :data="tableData"
     >
-      <el-table-column
-        fixed
-        prop="name"
-        label="姓名"
+      <vxe-column
+        field="name"
+        title="姓名"
         width="120"
       />
-      <el-table-column
-        prop="usercode"
-        label="账号"
+      <vxe-column
+        filfielded="usercode"
+        title="账号"
       />
-      <el-table-column
-        prop="mobile"
-        label="手机号"
+      <vxe-column
+        field="mobile"
+        title="手机号"
       />
-      <el-table-column
-        prop="deptname"
-        label="部门"
+      <vxe-column
+        field="deptname"
+        title="部门"
       />
-      <el-table-column
-        prop="tel"
-        label="电话"
+      <vxe-column
+        field="tel"
+        title="电话"
       />
-      <el-table-column
-        prop="status"
-        label="状态"
-        width="120"
+      <vxe-column
+        field="status"
+        title="状态"
       />
-      <el-table-column
-        fixed="right"
-        label="操作"
+      <vxe-column
+        title="操作"
         width="120"
       >
-        <template #default>
-          <el-button
-            link
-            type="primary"
-            size="small"
+        <template #default="{ row }">
+          <el-tooltip
+            effect="dark"
+            content="修改"
           >
-            Edit
-          </el-button>
-          <el-button
-            link
-            size="small"
-            type="danger"
-            @click="handleClick"
+            <el-button
+              link
+              type="primary"
+              size="small"
+              @click="handleClickEdit(row)"
+            >
+              <div class="i-carbon-edit text-xl" />
+            </el-button>
+          </el-tooltip>
+          <el-tooltip
+            effect="dark"
+            content="删除"
           >
-            Delete
-          </el-button>
+            <el-button
+              link
+              size="small"
+              type="danger"
+              @click="handleDeleteClick(row)"
+            >
+              <div class="i-carbon-trash-can text-xl" />
+            </el-button>
+          </el-tooltip>
         </template>
-      </el-table-column>
-    </el-table>
+      </vxe-column>
+    </vxe-table>
     <div class="flex justify-end mt-4">
       <el-pagination
-        v-model="currentPage1"
-        :page-size="100"
+        :page-size="pageSize"
         small="small"
         layout="total, prev, pager, next"
-        :total="1000"
+        :total="totalCount"
+        @current-change="currentChange"
       />
     </div>
   </div>
+  <add-edit
+    v-model="isVisible"
+    :select-val="selectVal"
+    @onConfirm="onConfirm"
+  />
 </template>
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { ElNotification } from 'element-plus'
+import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
+import { Admin as AdminApi } from '@/api/admin'
 
-const router = useRouter()
-
-const onClickAdd = () => {
-  router.push({ name: 'user-manager-add-user' })
+const isVisible = ref(false)
+const selectVal = ref({})
+const tableData = ref([])
+const totalCount = ref(0)
+const pageSize = ref(10)
+const page = ref(1)
+const loading = ref(false)
+const getList = async () => {
+  loading.value = true
+  const { list, count } = await AdminApi.getUserList({ limit: pageSize.value, page: page.value })
+  tableData.value = list
+  totalCount.value = count
+  loading.value = false
 }
-const currentPage1 = ref(5)
+getList()
 
-const tableData = ref([
-  {
-    name: '项目员119',
-    usercode: '11900119119',
-    mobile: '11900119119',
-    deptname: '电子交易部',
-    tel: '020-11911900',
-  },
-])
+const onClickRefresh = async () => {
+  await getList()
+}
+const addUser = async (val) => {
+  return await AdminApi.addUser(val)
+}
+
+const editUser = async (val) => {
+  return await AdminApi.editUser(val.id, val)
+}
+const onConfirm = async (val) => {
+  let data
+  if (val.id)
+    data = await editUser(val)
+  else data = await addUser(val)
+
+  const { code, message } = data
+  if (code < 100) {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'success',
+    })
+    await getList()
+  }
+}
+const currentChange = (val) => {
+  page.value = val
+}
+const handleClickAdd = () => {
+  isVisible.value = true
+}
+const handleClickEdit = (row) => {
+  selectVal.value = row
+  isVisible.value = true
+}
+
+const handleDeleteClick = async (row) => {
+  loading.value = true
+  const { code, message } = await AdminApi.deleteUser(row.id)
+  if (code < 100) {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'success',
+    })
+    await getList()
+  }
+}
+watch(isVisible, (val) => {
+  if (!val)
+    selectVal.value = {}
+})
+
 </script>
