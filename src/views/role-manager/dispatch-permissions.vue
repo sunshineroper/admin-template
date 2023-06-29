@@ -13,7 +13,16 @@
         label="分配菜单"
         name="first"
       >
-        <dispatch-menu ref="dispathMenuRef" />
+        <el-text
+          class="my-2"
+          type="danger"
+        >
+          提示:红色显示的节点为禁用的菜单
+        </el-text>
+        <dispatch-menu
+          ref="dispathMenuRef"
+          :default-checked-keys="defaultCheckedKeys"
+        />
       </el-tab-pane>
       <el-tab-pane
         label="Config"
@@ -45,10 +54,12 @@
   </el-drawer>
 </template>
 <script setup>
-import { useVModel } from '@vueuse/core'
-import { ref } from 'vue'
+import { useCloned, useVModel } from '@vueuse/core'
+import { ref, watch } from 'vue'
+import { ElNotification } from 'element-plus'
 import dispatchMenu from './dispatch-menu.vue'
 import mitt from '@/utils/event'
+import { Admin as AdminApi } from '@/api/admin'
 
 const props = defineProps({
   modelValue: {
@@ -56,17 +67,48 @@ const props = defineProps({
     default: false,
     required: true,
   },
+  selectVal: {
+    type: Object,
+    default: () => {},
+  },
 })
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'onDispathPermissions'])
+const defaultCheckedKeys = ref([])
 
 const drawerVisible = useVModel(props, 'modelValue', emits)
 const activeName = ref('first')
 const dispathMenuRef = ref()
-
+const menu_id = ref([])
 mitt.on('dispathTreeMenu', (val) => {
+  menu_id.value = val
 })
 
-const handleClickConfirm = () => {
+const handleClickConfirm = async () => {
   dispathMenuRef.value && dispathMenuRef.value.onClickConfrim()
+  const { code, message } = await AdminApi.dispatchPermissions(props.selectVal.id, { menu_id: menu_id.value })
+  if (code < 100) {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'success',
+    })
+  }
+  else {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'error',
+    })
+  }
+  emits('onDispathPermissions')
+  drawerVisible.value = false
+  defaultCheckedKeys.value = []
 }
+
+watch(() => props.selectVal, (obj) => {
+  if (obj.id) {
+    const { cloned } = useCloned(obj)
+    defaultCheckedKeys.value = cloned.value.role_menu.map(item => item.id)
+  }
+}, { deep: true })
 </script>

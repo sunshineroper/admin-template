@@ -86,3 +86,12 @@ export const post = (url, data = {}, params = {}) => {
     params,
   })
 }
+
+export const put = (url, data = {}, params = {}) => {
+  return service({
+    method: 'put',
+    url,
+    data,
+    params,
+  })
+}

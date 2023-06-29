@@ -1,4 +1,4 @@
-import { _delete, get, post } from '@/utils/request'
+import { _delete, get, post, put } from '@/utils/request'
 
 export class Admin {
   static addMenu(data) {
@@ -27,5 +27,9 @@ export class Admin {
 
   static deleteRole(id) {
     return _delete (`admin/role/deleteRole/${id}`)
+  }
+
+  static dispatchPermissions(id, data) {
+    return put (`admin/role/dispatchPermissions/${id}`, data)
   }
 }

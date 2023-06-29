@@ -15,6 +15,7 @@ export const userStore = defineStore('user', {
       isLogin: useLocalStorage('isLogin', false),
       isAdmin: useLocalStorage('isAdmin', true),
       roleRouter: [],
+      roleTreeRouter: [],
       accessToken: useLocalStorage('accessToken', ''),
       refreshToken: useLocalStorage('refreshToken', ''),
     }
@@ -25,6 +26,7 @@ export const userStore = defineStore('user', {
     },
     setRoleRouter(list) {
       this.roleRouter = list
+      normalizeTree(list, 0, this.roleTreeRouter)
     },
     changeLoginOut() {
       this.isLogin = false
@@ -39,7 +41,7 @@ export const userStore = defineStore('user', {
     },
   },
   getters: {
-    roleTreeRouter: ({ roleRouter }) => {
+    roleTreeRouterList: ({ roleRouter }) => {
       const roleTreeRouter = []
       normalizeTree(roleRouter, 0, roleTreeRouter)
 

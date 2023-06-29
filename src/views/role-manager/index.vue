@@ -114,7 +114,11 @@
     :select-val="selectVal"
     @onConfirm="onConfirm"
   />
-  <dispatch-permissions v-model="dispatchPermissionsVisible" />
+  <dispatch-permissions
+    v-model="dispatchPermissionsVisible"
+    :select-val="selectVal"
+    @onDispathPermissions="onDispathPermissions"
+  />
 </template>
 
 <script setup>
@@ -135,6 +139,9 @@ const getList = async () => {
   const list = await AdminApi.getRoleList()
   tableData.value = list
   loading.value = false
+}
+const onDispathPermissions = async () => {
+  await getList()
 }
 const handleEditClick = (val) => {
   selectVal.value = val
@@ -181,11 +188,17 @@ const onConfirm = async (val) => {
   }
 }
 
-const handleDispatchPermissionsClick = () => {
+const handleDispatchPermissionsClick = (val) => {
+  selectVal.value = val
   dispatchPermissionsVisible.value = true
 }
 watch(dialogVisible, (val) => {
   if (!val)
     selectVal.value = {}
-}, { deep: true })
+})
+
+watch(dispatchPermissionsVisible, (val) => {
+  if (!val)
+    selectVal.value = {}
+})
 </script>

@@ -33,7 +33,7 @@ const store = userStore()
 const appstore = appStore()
 const route = useRoute()
 
-const routerInfo = computed(() => store.roleTreeRouter)
+const routerInfo = computed(() => store.roleTreeRouterList)
 const activeIndex = ref('')
 const sideCollapse = computed(() => appstore.sideCollapse)
 watch(() => route, (val) => {

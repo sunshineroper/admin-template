@@ -216,7 +216,7 @@ const treeData = computed(() => {
     name: '主类目',
     children: [],
   }]
-  defaultTree[0].children.push(...store.roleTreeRouter)
+  defaultTree[0].children.push(...store.roleTreeRouterList)
   return defaultTree
 })
 const formRef = ref()
