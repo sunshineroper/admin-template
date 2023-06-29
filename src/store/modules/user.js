@@ -26,6 +26,7 @@ export const userStore = defineStore('user', {
     },
     setRoleRouter(list) {
       this.roleRouter = list
+      this.roleTreeRouter = []
       normalizeTree(list, 0, this.roleTreeRouter)
     },
     changeLoginOut() {
