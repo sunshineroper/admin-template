@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { ElNotification } from 'element-plus'
 import qs from 'qs'
+import { useLocalStorage } from '@vueuse/core'
 
 // import { userStore } from '@/store/modules/user'
 
@@ -30,7 +31,7 @@ const service = axios.create(config)
 service.interceptors.request.use((config) => {
   if (!config.repeatRequest)
     requestPending(config)
-  // config.headers.authorization = `Bearer ${store.accessToken}`
+  config.headers.authorization = `Bearer ${useLocalStorage('accessToken', '').value}`
   config.headers['Content-Type'] = 'application/json'
   return config
 })

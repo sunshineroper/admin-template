@@ -13,20 +13,23 @@ import { watch } from 'vue'
 import { toolsComponents, toolsComponentsName } from './index.js'
 import mitt from '@/utils/event'
 
-const emits = defineEmits('onClickRefresh')
+const emits = defineEmits('onClickRefresh', 'onClickSearch')
 mitt.on('onClickRefresh', () => {
   emits('onClickRefresh')
+})
+mitt.on('onClickSearch', () => {
+  emits('onClickSearch')
 })
 const props = defineProps({
   tools: {
     typeof: Array,
     default: () => {
-      return ['search', 'refersh']
+      return ['search', 'refresh']
     },
     validator: (val) => {
       // eslint-disable-next-line no-unreachable-loop
       for (const name of val)
-        return ['search', 'refersh'].includes(name)
+        return ['search', 'refresh'].includes(name)
     },
   },
 })

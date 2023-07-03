@@ -49,4 +49,8 @@ export class Admin {
   static deleteUser(id) {
     return _delete (`admin/user/deleteUser/${id}`)
   }
+
+  static getUserInfo() {
+    return get ('admin/user/getUserInfo')
+  }
 }

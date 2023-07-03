@@ -32,6 +32,28 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-form-item
+        label="用户角色"
+        prop="role_id"
+      >
+        <el-select
+          v-model="form.role_id"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          :reserve-keyword="false"
+          placeholder="请选择用户角色"
+        >
+          <el-option
+            v-for="item in roleList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+            :disabled="!item.status"
+          />
+        </el-select>
+      </el-form-item>
       <el-row :gutter="8">
         <el-col :span="12">
           <el-form-item
@@ -42,12 +64,12 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item
+          <!-- <el-form-item
             label="部门"
             prop="de"
           >
             <el-input v-model="form.d" />
-          </el-form-item>
+          </el-form-item> -->
         </el-col>
         <el-form-item
           label="状态"
@@ -93,8 +115,9 @@
   </el-dialog>
 </template>
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useCloned, useVModel } from '@vueuse/core'
+import { Admin as AdminApi } from '@/api/admin'
 
 const props = defineProps({
   modelValue: {
@@ -111,6 +134,7 @@ const props = defineProps({
 const form = ref({
   status: 1,
 })
+
 const emits = defineEmits(['update:modelValue', 'onConfirm'])
 const isVisible = useVModel(props, 'modelValue', emits)
 const reset = () => {
@@ -120,6 +144,16 @@ const reset = () => {
     nickname: '',
   }
 }
+const roleList = ref([])
+const getRoleList = async () => {
+  const list = await AdminApi.getRoleList()
+  roleList.value = list
+}
+
+onMounted(async () => {
+  await getRoleList()
+})
+getRoleList()
 const handleClose = () => {
   reset()
   isVisible.value = false

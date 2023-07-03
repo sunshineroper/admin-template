@@ -4,6 +4,7 @@ import router from '@/router'
 import { userStore } from '@/store/modules/user.js'
 import { Admin as AdminApi } from '@/api/admin'
 import { loadRouter } from '@/utils/load-router'
+import { normalizeUser } from '@/utils/util'
 
 router.beforeEach(async (to, from, next) => {
   const store = userStore()
@@ -14,10 +15,12 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done()
     }
 
-    const roleRouter = store.roleRouter
-    if (roleRouter.length === 0) {
-      const list = await AdminApi.getMenuList()
-      store.setRoleRouter(list)
+    const userInfo = store.userInfo
+    if (Object.keys(userInfo).length === 0) {
+      const user = await AdminApi.getUserInfo()
+      const { role_menu } = normalizeUser(user)
+      store.setRoleRouter(role_menu)
+      store.setUserInfo(user)
       loadRouter(router, store.roleTreeRouterList)
       next({ path: to.path })
     }

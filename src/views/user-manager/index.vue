@@ -7,6 +7,7 @@
         </div>
         <div class="flex-1">
           <el-input
+            v-model="q.mobile"
             placeholder="请输入手机号码"
           />
         </div>
@@ -17,14 +18,15 @@
         </div>
         <div class="flex-1">
           <el-input
+            v-model="q.name"
             placeholder="请输入姓名"
           />
         </div>
       </div>
     </div>
     <search-tools
-      :tools="['refresh']"
       @onClickRefresh="onClickRefresh"
+      @onClickSearch="onClickSearch"
     />
   </div>
 
@@ -72,8 +74,15 @@
       />
       <vxe-column
         field="deptname"
-        title="部门"
-      />
+        title="用户角色"
+      >
+        <template #default="{row}">
+          <span
+            v-for="role in row.role_list"
+            :key="role.id"
+          >{{ role.name }}</span>
+        </template>
+      </vxe-column>
       <vxe-column
         field="tel"
         title="电话"
@@ -81,7 +90,15 @@
       <vxe-column
         field="status"
         title="状态"
-      />
+      >
+        <template #default="{ row }">
+          <el-tag
+            :type="row.status ? 'success' : 'error'"
+          >
+            {{ row.status ? '启用' : '禁止登录' }}
+          </el-tag>
+        </template>
+      </vxe-column>
       <vxe-column
         title="操作"
         width="120"
@@ -133,7 +150,7 @@
   />
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
@@ -146,6 +163,7 @@ const totalCount = ref(0)
 const pageSize = ref(10)
 const page = ref(1)
 const loading = ref(false)
+const q = ref({})
 const getList = async () => {
   loading.value = true
   const { list, count } = await AdminApi.getUserList({ limit: pageSize.value, page: page.value })
@@ -153,7 +171,10 @@ const getList = async () => {
   totalCount.value = count
   loading.value = false
 }
-getList()
+
+onMounted(async () => {
+  await getList()
+})
 
 const onClickRefresh = async () => {
   await getList()
@@ -180,6 +201,13 @@ const onConfirm = async (val) => {
     })
     await getList()
   }
+  else {
+    ElNotification({
+      title: 'Tips',
+      message,
+      type: 'error',
+    })
+  }
 }
 const currentChange = (val) => {
   page.value = val
@@ -204,6 +232,8 @@ const handleDeleteClick = async (row) => {
     await getList()
   }
 }
+
+const onClickSearch = () => {}
 watch(isVisible, (val) => {
   if (!val)
     selectVal.value = {}

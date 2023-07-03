@@ -18,7 +18,7 @@
         </el-form-item>
         <el-form-item>
           <el-input
-            v-model="login.region"
+            v-model="login.password"
             type="password"
             class="relative"
           />
@@ -52,23 +52,23 @@
 import { ref } from 'vue'
 import { User } from '@element-plus/icons-vue'
 
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { Public } from '@/api/public'
 import { userStore } from '@/store/modules/user'
 
-// const router = useRouter()
+const router = useRouter()
 const store = userStore()
 const login = ref({})
 const loading = ref(false)
 
 const handleClickLogin = async () => {
-  // loading.value = true
-  const { accessToken, refreshToken } = await Public.login()
-  // loading.value = false
+  loading.value = true
+  const { accessToken, refreshToken } = await Public.login(login.value)
+  loading.value = false
   store.changeIsLogin(true)
   store.setAccessToken(accessToken)
   store.setRefreshToken(refreshToken)
-  // router.push({ path: '/' })
+  router.push({ path: '/' })
 }
 </script>
 

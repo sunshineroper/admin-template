@@ -74,3 +74,20 @@ export const treeSort = (list, sortFunc) => {
       item.children.sort(sortFunc)
   })
 }
+
+export const normalizeUser = (user) => {
+  if (!user)
+    return {}
+  const { role_list = [] } = user
+  let role_menu = []
+  if (role_list.length > 0) {
+    for (const role of role_list)
+      role_menu = role_menu.concat(...role.role_menu)
+  }
+  if (role_menu.length > 0) {
+    role_menu = role_menu.filter((role, index) => {
+      return role_menu.findIndex(item => item.id === role.id) === index
+    })
+  }
+  return { user, role_menu }
+}

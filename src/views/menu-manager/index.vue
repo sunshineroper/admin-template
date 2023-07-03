@@ -134,9 +134,7 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
-import { userStore } from '@/store/modules/user'
 
-const store = userStore()
 const loading = ref(true)
 const dialogVisible = ref(false)
 const selectVal = ref({})
@@ -148,7 +146,6 @@ const getMenuList = async () => {
   const list = await AdminApi.getMenuList()
   tableData.value = list
   loading.value = false
-  store.setRoleRouter(list)
 }
 
 const onClickRefresh = async () => {

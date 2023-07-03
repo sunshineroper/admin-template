@@ -5,9 +5,9 @@
   >
     <div class="flex-1 h-full bg-[#f0f2f5] py-6 px-8 overflow-y-auto">
       <router-view v-slot="{ Component }">
-        <keep-alive>
-          <component :is="Component" />
-        </keep-alive>
+        <!-- <keep-alive> -->
+        <component :is="Component" />
+        <!-- </keep-alive> -->
       </router-view>
     </div>
   </div>

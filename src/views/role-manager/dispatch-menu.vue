@@ -22,9 +22,14 @@ const customNodeClass = (data) => {
 const defaultProps = {
   children: 'children',
   label: 'name',
+  disabled: 'disabled',
   class: customNodeClass,
 }
-const treeData = computed(() => store.roleTreeRouter)
+const treeData = computed(() => store.roleTreeRouter.map((item) => {
+  if (item.status === 0)
+    item.disbaled = true
+  return item
+}))
 
 const props = defineProps({
   defaultCheckedKeys: {
@@ -37,7 +42,7 @@ const checkedKeys = ref([])
 
 const onClickConfrim = () => {
   const checkedKey = []
-  const allChecked = treeRef.value && treeRef.value.getCheckedNodes(true)
+  const allChecked = treeRef.value && treeRef.value.getCheckedNodes()
   if (allChecked) {
     allChecked.forEach((node) => {
       checkedKey.push(node.id)
@@ -53,4 +58,5 @@ watch(() => props.defaultCheckedKeys, (val) => {
     treeRef.value && treeRef.value.setCheckedKeys(val)
   })
 }, { deep: true, immediate: true })
+
 </script>
