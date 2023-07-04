@@ -172,6 +172,7 @@ watch(() => props.selectVal, (obj) => {
   if (obj.id) {
     const { cloned } = useCloned(obj)
     form.value = cloned.value
+    form.value.role_id = form.value.role_list.map(item => item.id)
   }
 })
 </script>
