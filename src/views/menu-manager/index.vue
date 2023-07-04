@@ -89,35 +89,31 @@
       />
       <vxe-column
         title="操作"
-        width="120"
+        width="180"
       >
         <template #default="{ row }">
-          <el-tooltip
-            effect="dark"
-            content="修改"
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="handleClick(row)"
           >
-            <el-button
-              link
-              type="primary"
-              size="small"
-              @click="handleClick(row)"
-            >
-              <div class="i-carbon-edit text-xl" />
-            </el-button>
-          </el-tooltip>
-          <el-tooltip
-            effect="dark"
-            content="删除"
+            <div class="flex items-center">
+              <div class="i-carbon-edit text-xl mr-1" />
+              <span>修改</span>
+            </div>
+          </el-button>
+          <el-button
+            link
+            size="small"
+            type="danger"
+            @click="handleDeleteClick(row)"
           >
-            <el-button
-              link
-              size="small"
-              type="danger"
-              @click="handleDeleteClick(row)"
-            >
+            <div class="flex items-center">
               <div class="i-carbon-trash-can text-xl" />
-            </el-button>
-          </el-tooltip>
+              <span>删除</span>
+            </div>
+          </el-button>
         </template>
       </vxe-column>
     </vxe-table>

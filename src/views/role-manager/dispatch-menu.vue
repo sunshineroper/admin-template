@@ -45,7 +45,7 @@ const checkedKeys = ref([])
 
 const onClickConfrim = () => {
   const checkedKey = []
-  const allChecked = treeRef.value && treeRef.value.getCheckedNodes()
+  const allChecked = treeRef.value && treeRef.value.getCheckedNodes(false, true)
   if (allChecked) {
     allChecked.forEach((node) => {
       checkedKey.push(node.id)

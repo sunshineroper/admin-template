@@ -63,48 +63,42 @@
       />
       <vxe-column
         title="操作"
-        width="190"
+        width="240"
       >
         <template #default="{ row }">
-          <el-tooltip
-            effect="dark"
-            content="修改"
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="handleEditClick(row)"
           >
-            <el-button
-              link
-              type="primary"
-              size="small"
-              @click="handleEditClick(row)"
-            >
-              <div class="i-carbon-edit text-xl" />
-            </el-button>
-          </el-tooltip>
-          <el-tooltip
-            effect="dark"
-            content="删除"
+            <div class="flex items-center">
+              <div class="i-carbon-edit text-xl mr-1" />
+              <span>修改</span>
+            </div>
+          </el-button>
+
+          <el-button
+            link
+            size="small"
+            type="primary"
+            @click="handleDispatchPermissionsClick(row)"
           >
-            <el-button
-              link
-              size="small"
-              type="danger"
-              @click="handleDeleteClick(row)"
-            >
+            <div class="flex items-center">
+              <span>分配权限</span>
+            </div>
+          </el-button>
+          <el-button
+            link
+            size="small"
+            type="danger"
+            @click="handleDeleteClick(row)"
+          >
+            <div class="flex items-center">
               <div class="i-carbon-trash-can text-xl" />
-            </el-button>
-          </el-tooltip>
-          <el-tooltip
-            effect="dark"
-            content="分配权限"
-          >
-            <el-button
-              link
-              size="small"
-              type="danger"
-              @click="handleDispatchPermissionsClick(row)"
-            >
-              <div class="i-carbon-trash-can text-xl" />
-            </el-button>
-          </el-tooltip>
+              <span>删除</span>
+            </div>
+          </el-button>
         </template>
       </vxe-column>
     </vxe-table>

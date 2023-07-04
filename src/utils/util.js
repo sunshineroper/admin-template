@@ -78,13 +78,17 @@ export const treeSort = (list, sortFunc) => {
 export const normalizeUser = (user) => {
   if (!user)
     return {}
+  let isAdmin = false
   const { role_list = [] } = user
   let role_menu = []
   if (role_list.length > 0) {
-    for (const role of role_list)
+    for (const role of role_list) {
+      if (role.level === 0)
+        isAdmin = true
       role_menu = role_menu.concat(...role.role_menu)
+    }
   }
-  if (role_menu.length > 0) {
+  if (role_menu.length > 0 && !isAdmin) {
     role_menu = role_menu.filter((role, index) => {
       return role_menu.findIndex(item => item.id === role.id) === index
     })
