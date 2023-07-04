@@ -89,6 +89,7 @@ const setHistory = (router) => {
   }
   currentTabName.value = name
   cookies.set('histories', histories.value)
+  cookies.set('currentTab', router)
 }
 
 watch(() => route, (to, from) => {

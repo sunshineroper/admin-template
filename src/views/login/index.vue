@@ -58,7 +58,10 @@ import { userStore } from '@/store/modules/user'
 
 const router = useRouter()
 const store = userStore()
-const login = ref({})
+const login = ref({
+  name: 'Sunshine',
+  password: 'Sunshine123!',
+})
 const loading = ref(false)
 
 const handleClickLogin = async () => {

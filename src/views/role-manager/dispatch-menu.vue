@@ -6,6 +6,7 @@
     node-key="id"
     :default-checked-keys="checkedKeys"
     :props="defaultProps"
+    :loading="loading"
   />
 </template>
 <script setup>
@@ -14,6 +15,7 @@ import { userStore } from '@/store/modules/user'
 import mitt from '@/utils/event'
 
 const store = userStore()
+const loading = ref(false)
 const treeRef = ref()
 const customNodeClass = (data) => {
   if (data.status === 0)
@@ -25,6 +27,7 @@ const defaultProps = {
   disabled: 'disabled',
   class: customNodeClass,
 }
+
 const treeData = computed(() => store.roleTreeRouter.map((item) => {
   if (item.status === 0)
     item.disbaled = true
