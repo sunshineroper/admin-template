@@ -21,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
       const { role_menu } = normalizeUser(user)
       store.setRoleRouter(role_menu)
       store.setUserInfo(user)
-      loadRouter(router, store.roleTreeRouterList)
+      loadRouter(router, store.roleRouter)
       next({ path: to.path })
     }
 

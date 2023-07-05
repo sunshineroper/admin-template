@@ -53,4 +53,27 @@ export class Admin {
   static getUserInfo() {
     return get ('admin/user/getUserInfo')
   }
+
+  static getDictList() {
+    return get ('admin/dict/getDictList')
+  }
+
+  static addDict(data) {
+    return post('admin/dict/addDict', data)
+  }
+
+  static editDict(id, data) {
+    return put(`admin/dict/editDict/${id}`, data)
+  }
+
+  static getDictDetailList(query) {
+    return get (`admin/dict/getDictDetailList?${qs.stringify(query)}`)
+  }
+
+  static addDictDetail(data = {}) {
+    if (!data.id)
+      return post('admin/dict/addDictDetail', data)
+    else
+      return put(`admin/dict/editDictDetail/${data.id}`, data)
+  }
 }
