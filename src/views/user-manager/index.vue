@@ -147,7 +147,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import { ElNotification } from 'element-plus'
+import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
@@ -175,35 +175,19 @@ onMounted(async () => {
 const onClickRefresh = async () => {
   await getList()
 }
-const addUser = async (val) => {
-  return await AdminApi.addUser(val)
-}
 
-const editUser = async (val) => {
-  return await AdminApi.editUser(val.id, val)
-}
 const onConfirm = async (val) => {
-  let data
-  if (val.id)
-    data = await editUser(val)
-  else data = await addUser(val)
+  const { code, message } = await AdminApi.addOrEditUser(val)
 
-  const { code, message } = data
-  if (code < 100) {
-    ElNotification({
-      title: 'Tips',
-      message,
-      type: 'success',
-    })
+  if (code < 100)
+
     await getList()
-  }
-  else {
-    ElNotification({
-      title: 'Tips',
-      message,
-      type: 'error',
-    })
-  }
+
+  ElNotification({
+    title: 'Tips',
+    message,
+    type: code < 100 ? 'success' : 'error',
+  })
 }
 const currentChange = (val) => {
   page.value = val
@@ -218,15 +202,20 @@ const handleClickEdit = (row) => {
 
 const handleDeleteClick = async (row) => {
   loading.value = true
-  const { code, message } = await AdminApi.deleteUser(row.id)
-  if (code < 100) {
+  ElMessageBox.confirm('是否确定删除该用户,删除后不可恢复', {
+    title: '提醒',
+  }).then(async () => {
+    const { code, message } = await AdminApi.deleteUser(row.id)
+    if (code < 100)
+      await getList()
+
     ElNotification({
       title: 'Tips',
       message,
-      type: 'success',
+      type: code < 100 ? 'success' : 'error',
     })
-    await getList()
-  }
+    loading.value = false
+  })
 }
 
 const onClickSearch = () => {}

@@ -38,12 +38,11 @@ export class Admin {
     return get(`admin/user/getUserList?${qs.stringify(query)}`)
   }
 
-  static addUser(data) {
-    return post('admin/user/addUser', data)
-  }
-
-  static editUser(id, data) {
-    return post(`admin/user/editUser/${id}`, data)
+  static addOrEditUser(data) {
+    if (!data.id)
+      return post('admin/user/addUser', data)
+    else
+      return put(`admin/user/editUser/${data.id}`, data)
   }
 
   static deleteUser(id) {
