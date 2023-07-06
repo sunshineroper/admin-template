@@ -58,22 +58,29 @@ export class Admin {
     return get ('admin/dict/getDictList')
   }
 
-  static addDict(data) {
-    return post('admin/dict/addDict', data)
-  }
-
-  static editDict(id, data) {
-    return put(`admin/dict/editDict/${id}`, data)
+  static addOrEditDict(data) {
+    if (!data.id)
+      return post('admin/dict/addDict', data)
+    else
+      return put(`admin/dict/editDict/${data.id}`, data)
   }
 
   static getDictDetailList(query) {
     return get (`admin/dict/getDictDetailList?${qs.stringify(query)}`)
   }
 
-  static addDictDetail(data = {}) {
+  static addOrEditDictDetail(data = {}) {
     if (!data.id)
       return post('admin/dict/addDictDetail', data)
     else
       return put(`admin/dict/editDictDetail/${data.id}`, data)
+  }
+
+  static deleteDictionary(id) {
+    return _delete(`admin/dict/${id}`)
+  }
+
+  static deleteDictionaryDetail(id) {
+    return _delete(`admin/dict-detail/${id}`)
   }
 }
