@@ -55,11 +55,11 @@
         title="显示状态"
       >
         <template #default="{ row }">
-          <el-tag
-            :type="row.hidden ? 'error' : 'success'"
-          >
-            {{ row.hidden ? '隐藏' : '显示' }}
-          </el-tag>
+          <dict-el-tag
+            :status="row.hidden"
+            dict-status-type="hidden"
+            dict-type="hidden-type"
+          />
         </template>
       </vxe-column>
       <vxe-column
@@ -67,11 +67,15 @@
         title="是否启用"
       >
         <template #default="{ row }">
-          <el-tag
+          <dict-el-tag
+            :status="row.status"
+            dict-status-type="status"
+          />
+          <!-- <el-tag
             :type="row.status ? 'success' : 'error'"
           >
             {{ row.status ? '启用' : '禁用' }}
-          </el-tag>
+          </el-tag> -->
         </template>
       </vxe-column>
       <vxe-column
@@ -130,6 +134,7 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
+import dictElTag from '@/components/dict-el-tag/index.vue'
 
 const loading = ref(true)
 const dialogVisible = ref(false)

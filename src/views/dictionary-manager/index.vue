@@ -38,11 +38,15 @@
       title="是否启用"
     >
       <template #default="{ row }">
-        <el-tag
+        <!-- <el-tag
           :type="row.status ? 'success' : 'error'"
         >
           {{ row.status ? '启用' : '禁用' }}
-        </el-tag>
+        </el-tag> -->
+        <dict-el-tag
+          :status="row.status"
+          :dict-status-type="status"
+        />
       </template>
     </vxe-column>
     <vxe-column
@@ -112,6 +116,7 @@ import { useRouter } from 'vue-router'
 import addEdit from './add-edit-dictionary.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
+import dictElTag from '@/components/dict-el-tag/index.vue'
 
 const router = useRouter()
 const loading = ref(false)

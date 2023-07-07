@@ -92,11 +92,10 @@
         title="状态"
       >
         <template #default="{ row }">
-          <el-tag
-            :type="row.status ? 'success' : 'error'"
-          >
-            {{ row.status ? '启用' : '禁止登录' }}
-          </el-tag>
+          <dict-el-tag
+            :status="row.status"
+            dict-status-type="status"
+          />
         </template>
       </vxe-column>
       <vxe-column
@@ -151,6 +150,7 @@ import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
+import dictElTag from '@/components/dict-el-tag/index.vue'
 
 const isVisible = ref(false)
 const selectVal = ref({})

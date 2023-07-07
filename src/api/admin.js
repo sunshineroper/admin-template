@@ -82,4 +82,8 @@ export class Admin {
   static deleteDictionaryDetail(id) {
     return _delete(`admin/dict-detail/${id}`)
   }
+
+  static getDictMapList() {
+    return get ('admin/dict/getDictMapList')
+  }
 }
