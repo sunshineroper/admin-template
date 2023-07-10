@@ -3,7 +3,10 @@ import { ElNotification } from 'element-plus'
 import qs from 'qs'
 import { useLocalStorage } from '@vueuse/core'
 
-// import { userStore } from '@/store/modules/user'
+import { userStore } from '@/store/modules/user'
+
+const tokenErrorCode = [10040, 10042, 10052]
+const excludeCode = [10041, 10051]
 
 const peddingMap = new Map()
 const requestPending = (config) => {
@@ -19,7 +22,7 @@ const requestPending = (config) => {
 
   else { peddingMap.set(key, controller) }
 }
-// const store = userStore()
+//
 const config = {
   timeout: 1000 * 30,
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -33,21 +36,46 @@ service.interceptors.request.use((config) => {
     requestPending(config)
   config.headers.authorization = `Bearer ${useLocalStorage('accessToken', '').value}`
   config.headers['Content-Type'] = 'application/json'
+  if (config.url === 'admin/user/refreshToken')
+    config.headers.authorization = `Bearer ${useLocalStorage('refreshToken', '').value}`
+
   return config
 })
 service.interceptors.response.use((response) => {
   const { status, data } = response
+  const { url } = response.config
   const key = `${response.config.method}${response.config.url}?${qs.stringify(config.body)}`
   peddingMap.delete(key)
   if (status.toString().charAt(0) === '2')
     return data
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    ElNotification({
-      title: 'Tips',
-      message: data.message,
-      type: 'error',
-    })
+    let { code, message } = data
+    const store = userStore()
+    if (code === 10041 || code === 10051) {
+      const cache = {}
+      if (cache.url !== url)
+        cache.url = url
+      const { refreshToken, accessToken } = await service('admin/user/refreshToken')
+      store.setRefreshToken(refreshToken)
+      store.setAccessToken(accessToken)
+      const result = await service(response.config)
+      resolve(result)
+    }
+    if (tokenErrorCode.includes(code)) {
+      message = '登录过期请重新登录'
+      store.changeLoginOut()
+      const { origin } = window.location
+      window.location.href = origin
+      return resolve(null)
+    }
+    if (!excludeCode.includes(code)) {
+      ElNotification({
+        title: 'Tips',
+        message,
+        type: 'error',
+      })
+    }
     reject(data)
   })
 }, (error) => {

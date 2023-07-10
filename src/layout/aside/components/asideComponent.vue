@@ -24,6 +24,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
+import { watch } from 'vue'
 import asideComponent from './asideComponent.vue'
 
 const router = useRouter()
@@ -33,8 +34,12 @@ const props = defineProps({
   },
 })
 
-const handleClick = ({ index }) => {
-  const path = props.routerInfo.router_url
+const currentRouter = {}
+const handleClick = () => {
+  const path = currentRouter.value.router_url
   path && router.push(path)
 }
+watch(() => props.routerInfo, (val) => {
+  currentRouter.value = val
+}, { deep: true, immediate: true })
 </script>

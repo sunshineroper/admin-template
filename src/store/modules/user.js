@@ -29,7 +29,7 @@ export const userStore = defineStore('user', {
     },
     changeLoginOut() {
       this.isLogin = false
-      cookies.remove('histories')
+      cookies.remove('historie')
       cookies.remove('currentTab')
     },
     setAccessToken(val) {
