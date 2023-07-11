@@ -11,6 +11,7 @@ import router from '@/router'
 import pinia from '@/store'
 import '@/permissions'
 import 'vxe-table/lib/style.css'
+import installComponent from '@/components/index.js'
 
 const app = createApp(App)
 useDirective(app)
@@ -18,4 +19,5 @@ app.use(ElementPlus)
 app.use(pinia)
 app.use(router)
 app.use(VXETable)
+installComponent(app)
 app.mount('#app')
