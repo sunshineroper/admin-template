@@ -90,4 +90,8 @@ export class Admin {
   static getApiPageList(query) {
     return get (`admin/api/getApiPageList?${qs.stringify(query)}`)
   }
+
+  static getPerissionRouterName() {
+    return get ('admin/api/getPerissionRouterName')
+  }
 }
