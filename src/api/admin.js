@@ -86,4 +86,8 @@ export class Admin {
   static getDictMapList() {
     return get ('admin/dict/getDictMapList')
   }
+
+  static getApiPageList(query) {
+    return get (`admin/api/getApiPageList?${qs.stringify(query)}`)
+  }
 }
