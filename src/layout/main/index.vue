@@ -3,7 +3,7 @@
     :class="hasTagsTable ? 'pt-[104px]' : 'pt-[65px]'"
     class="flex flex-col relative bottom-0 h-full ml-[200px] "
   >
-    <div class="flex-1 h-full bg-[#f0f2f5] py-6 px-8 overflow-y-auto">
+    <div class="flex-1 h-full bg-[#f0f2f5] py-6 px-8">
       <router-view v-slot="{ Component }">
         <!-- <keep-alive> -->
         <component :is="Component" />

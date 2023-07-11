@@ -121,6 +121,7 @@ import dictElTag from '@/components/dict-el-tag/index.vue'
 const router = useRouter()
 const loading = ref(false)
 const pageSize = ref(10)
+const page = ref(1)
 const totalCount = ref(0)
 const tableData = ref([])
 const dialogVisible = ref(false)
@@ -128,7 +129,7 @@ const selectVal = ref({})
 
 const getList = async () => {
   loading.value = true
-  const { list, count } = await AdminApi.getDictList()
+  const { list, count } = await AdminApi.getDictList({ limit: pageSize.value, page: page.value })
   tableData.value = list
   totalCount.value = count
   loading.value = false
@@ -136,7 +137,10 @@ const getList = async () => {
 onMounted(async () => {
   await getList()
 })
-const currentChange = () => {}
+const currentChange = async (val) => {
+  page.value = val
+  await getList()
+}
 const onConfirm = async (val) => {
   loading.value = true
   let type = 'success'

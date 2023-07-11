@@ -148,9 +148,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
-import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
-import dictElTag from '@/components/dict-el-tag/index.vue'
 
 const isVisible = ref(false)
 const selectVal = ref({})
