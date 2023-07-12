@@ -91,6 +91,10 @@ export class Admin {
     return get (`admin/api/getApiPageList?${qs.stringify(query)}`)
   }
 
+  static getApiList() {
+    return get ('admin/api/getList')
+  }
+
   static getPerissionRouterName() {
     return get ('admin/api/getPerissionRouterName')
   }

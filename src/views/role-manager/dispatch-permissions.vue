@@ -6,7 +6,6 @@
   >
     <el-tabs
       v-model="activeName"
-      class="demo-tabs"
       @tab-click="handleClick"
     >
       <el-tab-pane
@@ -14,33 +13,30 @@
         name="first"
       >
         <el-text
-          class="my-2"
+          class="my-4"
           type="danger"
         >
           提示:红色显示的节点为禁用的菜单
         </el-text>
         <dispatch-menu
           ref="dispathMenuRef"
-          :default-checked-keys="defaultCheckedKeys"
+          :default-checked-keys="defaultCheckedMenuKeys"
         />
       </el-tab-pane>
       <el-tab-pane
-        label="Config"
+        label="分配API权限"
         name="second"
       >
-        Config
-      </el-tab-pane>
-      <el-tab-pane
-        label="Role"
-        name="third"
-      >
-        Role
-      </el-tab-pane>
-      <el-tab-pane
-        label="Task"
-        name="fourth"
-      >
-        Task
+        <el-text
+          class="my-4"
+          type="danger"
+        >
+          提示:红色显示的节点为禁用的接口
+        </el-text>
+        <dispath-api
+          ref="dispathApiRef"
+          :default-checked-keys="defaultCheckedRouterKeys"
+        />
       </el-tab-pane>
     </el-tabs>
     <template #footer>
@@ -58,6 +54,7 @@ import { useCloned, useVModel } from '@vueuse/core'
 import { ref, watch } from 'vue'
 import { ElNotification } from 'element-plus'
 import dispatchMenu from './dispatch-menu.vue'
+import dispathApi from './dispatch-api.vue'
 import mitt from '@/utils/event'
 import { Admin as AdminApi } from '@/api/admin'
 
@@ -73,19 +70,27 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['update:modelValue', 'onDispathPermissions'])
-const defaultCheckedKeys = ref([])
+const defaultCheckedMenuKeys = ref([])
+const defaultCheckedRouterKeys = ref([])
 
 const drawerVisible = useVModel(props, 'modelValue', emits)
 const activeName = ref('first')
 const dispathMenuRef = ref()
+const dispathApiRef = ref()
 const menu_id = ref([])
+const permission_router_id = ref([])
 mitt.on('dispathTreeMenu', (val) => {
   menu_id.value = val
 })
 
+mitt.on('dispathTreeApi', (val) => {
+  permission_router_id.value = val
+})
+
 const handleClickConfirm = async () => {
   dispathMenuRef.value && dispathMenuRef.value.onClickConfrim()
-  const { code, message } = await AdminApi.dispatchPermissions(props.selectVal.id, { menu_id: menu_id.value })
+  dispathApiRef.value && dispathApiRef.value.onClickConfrim()
+  const { code, message } = await AdminApi.dispatchPermissions(props.selectVal.id, { menu_id: menu_id.value, permission_router_id: permission_router_id.value })
   if (code < 100) {
     ElNotification({
       title: 'Tips',
@@ -102,13 +107,15 @@ const handleClickConfirm = async () => {
   }
   emits('onDispathPermissions')
   drawerVisible.value = false
-  defaultCheckedKeys.value = []
+  defaultCheckedMenuKeys.value = []
+  defaultCheckedRouterKeys.value = []
 }
 
 watch(() => props.selectVal, (obj) => {
   if (obj.id) {
     const { cloned } = useCloned(obj)
-    defaultCheckedKeys.value = cloned.value.role_menu.map(item => item.id)
+    defaultCheckedMenuKeys.value = cloned.value.role_menu.map(item => item.id)
+    defaultCheckedRouterKeys.value = cloned.value.permission_router_list.map(item => item.id)
   }
 }, { deep: true })
 </script>

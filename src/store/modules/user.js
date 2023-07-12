@@ -29,8 +29,10 @@ export const userStore = defineStore('user', {
     },
     changeLoginOut() {
       this.isLogin = false
-      cookies.remove('historie')
+      cookies.remove('histories')
       cookies.remove('currentTab')
+      localStorage.clear()
+      this.userInfo = {}
     },
     setAccessToken(val) {
       this.accessToken = val
