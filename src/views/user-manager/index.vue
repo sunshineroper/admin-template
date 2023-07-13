@@ -148,7 +148,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
-import { Admin as AdminApi } from '@/api/admin'
+import { User as userApi } from '@/api/user'
 
 const isVisible = ref(false)
 const selectVal = ref({})
@@ -160,7 +160,7 @@ const loading = ref(false)
 const q = ref({})
 const getList = async () => {
   loading.value = true
-  const { list, count } = await AdminApi.getUserList({ limit: pageSize.value, page: page.value })
+  const { list, count } = await userApi.getUserList({ limit: pageSize.value, page: page.value })
   tableData.value = list
   totalCount.value = count
   loading.value = false
@@ -175,7 +175,7 @@ const onClickRefresh = async () => {
 }
 
 const onConfirm = async (val) => {
-  const { code, message } = await AdminApi.addOrEditUser(val)
+  const { code, message } = await userApi.addOrEditUser(val)
 
   if (code < 100)
 
@@ -203,7 +203,7 @@ const handleDeleteClick = async (row) => {
   ElMessageBox.confirm('是否确定删除该用户,删除后不可恢复', {
     title: '提醒',
   }).then(async () => {
-    const { code, message } = await AdminApi.deleteUser(row.id)
+    const { code, message } = await userApi.deleteUser(row.id)
     if (code < 100)
       await getList()
 

@@ -3,6 +3,7 @@ import 'nprogress/nprogress.css'
 import { appStore } from './store/modules/app'
 import router from '@/router'
 import { userStore } from '@/store/modules/user.js'
+import { User as UserApi } from '@/api/user'
 import { Admin as AdminApi } from '@/api/admin'
 import { loadRouter } from '@/utils/load-router'
 import { normalizeUser } from '@/utils/util'
@@ -19,7 +20,7 @@ router.beforeEach(async (to, from, next) => {
 
     const userInfo = store.userInfo
     if (Object.keys(userInfo).length === 0) {
-      const user = await AdminApi.getUserInfo()
+      const user = await UserApi.getUserInfo()
       const dict_list = await AdminApi.getDictMapList()
       appstore.setDictList(dict_list)
       const { role_menu } = normalizeUser(user)

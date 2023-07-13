@@ -34,25 +34,6 @@ export class Admin {
     return put (`admin/role/dispatchPermissions/${id}`, data)
   }
 
-  static getUserList(query) {
-    return get(`admin/user/getUserList?${qs.stringify(query)}`)
-  }
-
-  static addOrEditUser(data) {
-    if (!data.id)
-      return post('admin/user/addUser', data)
-    else
-      return put(`admin/user/editUser/${data.id}`, data)
-  }
-
-  static deleteUser(id) {
-    return _delete (`admin/user/deleteUser/${id}`)
-  }
-
-  static getUserInfo() {
-    return get ('admin/user/getUserInfo')
-  }
-
   static getDictList() {
     return get ('admin/dict/getDictList')
   }

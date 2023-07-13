@@ -56,7 +56,7 @@ service.interceptors.response.use((response) => {
       const cache = {}
       if (cache.url !== url)
         cache.url = url
-      const { refreshToken, accessToken } = await service('admin/user/refreshToken')
+      const { refreshToken, accessToken } = await service('user/refreshToken')
       store.setRefreshToken(refreshToken)
       store.setAccessToken(accessToken)
       const result = await service(response.config)
