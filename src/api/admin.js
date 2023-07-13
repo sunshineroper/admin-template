@@ -79,4 +79,8 @@ export class Admin {
   static getPerissionRouterName() {
     return get ('admin/api/getPerissionRouterName')
   }
+
+  static getLogList() {
+    return get('admin/log/getList')
+  }
 }
