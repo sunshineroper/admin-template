@@ -8,7 +8,7 @@
       <logo />
       <el-menu
         style="height: calc(100vh - 60px);border-right: none;"
-        class="shadow bg-white/75 dark:bg-black/75 overflow-y-auto "
+        class="shadow bg-white/75 dark:bg-black/75 overflow-y-auto backdrop-blur-sm"
         :default-active="activeIndex"
         :collapse="sideCollapse"
       >
@@ -43,7 +43,7 @@ watch(() => route, (val) => {
 // const isCollapse = ref(true)
 </script>
 <style>
-.layout-menu  .is-active {
+/* .layout-menu  .is-active {
   background: #579ef8 !important;
 }
 .layout-menu .is-opened .el-menu {
@@ -51,5 +51,5 @@ watch(() => route, (val) => {
 }
 .layout-menu .el-sub-menu .el-menu-item  {
   font-size: 12px !important;
-}
+} */
 </style>

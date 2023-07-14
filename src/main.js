@@ -11,6 +11,7 @@ import router from '@/router'
 import pinia from '@/store'
 import '@/permissions'
 import 'vxe-table/lib/style.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import installComponent from '@/components/index.js'
 
 const app = createApp(App)

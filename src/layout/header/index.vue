@@ -1,6 +1,6 @@
 <template>
   <div
-    class="box-border shadow-md fixed top-0 left-[200px] right-0 backdrop-blur-sm bg-white/75 z-10 dark:bg-black/75"
+    class="headerbox-border shadow-md fixed top-0 left-[200px] right-0 backdrop-blur-sm bg-white/75 z-10"
   >
     <div class="mx-6 flex py-3">
       <div class="flex-1 flex items-center">
