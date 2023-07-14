@@ -19,15 +19,15 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useCookies } from '@vueuse/integrations/useCookies'
+import { useLocalStorage } from '@vueuse/core'
 import { appStore } from '@/store/modules/app.js'
 
 const currentTabName = ref()
 const store = appStore()
 const route = useRoute()
 const router = useRouter()
-const histories = ref([])
-const cookies = useCookies(['locale'])
+const histories = useLocalStorage('histories', [])
+const currentTab = useLocalStorage('currentTab')
 
 const tagsTabHeight = ref('56px')
 
@@ -51,11 +51,8 @@ const fmtTile = (title, router) => {
 }
 
 const initHistories = () => {
-  if (histories.value.length === 0 && cookies.get('histories'))
-    histories.value = cookies.get('histories')
-  const currentTab = cookies.get('currentTab')
-  if (currentTab)
-    currentTabName.value = currentTab
+  if (currentTab.value)
+    currentTabName.value = currentTab.value
 }
 
 onMounted(() => {
@@ -67,7 +64,7 @@ const changeRouter = (r) => {
 
   router.push({ name, params, query })
   currentTabName.value = formatString(r)
-  cookies.set('currentTab', formatString(r))
+  currentTab.value = formatString(r)
 }
 
 const onHandleCloseClick = (name) => {
@@ -85,7 +82,6 @@ const onHandleCloseClick = (name) => {
   }
   if (currentTab)
     changeRouter(currentTab)
-  cookies.set('histories', histories.value)
 }
 
 function onTagsTabClick({ index }) {
@@ -125,14 +121,10 @@ const setHistory = (router) => {
     })
   }
   currentTabName.value = formatString(router)
-  cookies.set('histories', histories.value)
-  cookies.set('currentTab', formatString(router))
+  currentTab.value = formatString(router)
 }
 
-watch(() => route, (to, from) => {
-  if (!from)
-    initHistories()
-
+watch(() => route, (to) => {
   setHistory(to)
 }, { deep: true, immediate: true })
 

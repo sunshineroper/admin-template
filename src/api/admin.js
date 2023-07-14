@@ -80,7 +80,7 @@ export class Admin {
     return get ('admin/api/getPerissionRouterName')
   }
 
-  static getLogList() {
-    return get('admin/log/getList')
+  static getLogList(query) {
+    return get(`admin/log/getList?${qs.stringify(query)}`)
   }
 }
