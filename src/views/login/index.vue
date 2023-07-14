@@ -1,22 +1,35 @@
 <template>
   <div class="login-container bg-cover w-full h-full relative">
-    <div class="absolute w-[30%] h-[240px] px-4 py-12 top-[28vh] left-[8vw] bg-white box-content rd-[12px]">
+    <div class="login-left" />
+    <div class="absolute w-[30%] h-[240px] px-4 py-12 top-[50%] ml-[100px] translate-y-[-50%] left-[50%] bg-white box-content">
       <div class="flex justify-center items-center text-4xl mb-8">
         <div class="i-carbon-sun text-orange-400 mr-4" />
         <span>Sun-Vue-Admin</span>
       </div>
       <el-form
-        label-position="left"
-        label-width="0"
+        label-position="top"
         :model="login"
       >
-        <el-form-item class="relative">
+        <el-form-item
+          label="用户名:"
+          class="relative"
+          :rules="[{
+            required: true, trigger: 'blur' ,
+            message: '请输入用户名'
+          }]"
+        >
           <el-input v-model="login.name" />
           <div class="absolute right-4">
             <el-icon><User /></el-icon>
           </div>
         </el-form-item>
-        <el-form-item>
+        <el-form-item
+          label="密码"
+          :rules="[{
+            required: true, trigger: 'blur',
+            message: '请输入密码'
+          }]"
+        >
           <el-input
             v-model="login.password"
             type="password"
@@ -27,7 +40,7 @@
           </div>
         </el-form-item>
       </el-form>
-      <div class="flex">
+      <div class="flex mt-4">
         <el-button
           class="flex-1"
           type="primary"
@@ -76,7 +89,14 @@ const handleClickLogin = async () => {
 </script>
 
 <style scoped>
-.login-container {
-  background-image: url('@/assets/img/login-bg.jpg');
+.login-left {
+  background-image: url('@/assets/img/login-bg.png');
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    background-size: contain;
+    background-position: 80% center;
+    background-repeat: no-repeat;
+
 }
 </style>
