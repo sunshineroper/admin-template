@@ -98,6 +98,11 @@
           />
         </template>
       </vxe-column>
+      <vxe-column title="创建时间">
+        <template #default="{ row }">
+          {{ $filters.formatDate(row.createTime) }}
+        </template>
+      </vxe-column>
       <vxe-column
         title="操作"
         width="200"

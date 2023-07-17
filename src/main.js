@@ -12,6 +12,7 @@ import pinia from '@/store'
 import '@/permissions'
 import 'vxe-table/lib/style.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import filters from '@/filters/index.js'
 import installComponent from '@/components/index.js'
 
 const app = createApp(App)
@@ -21,4 +22,5 @@ app.use(pinia)
 app.use(router)
 app.use(VXETable)
 installComponent(app)
+filters(app)
 app.mount('#app')
