@@ -7,8 +7,8 @@
     <div class="flex flex-col">
       <logo />
       <el-menu
-        style="height: calc(100vh - 60px);border-right: none;"
-        class="shadow bg-white/75 dark:bg-black/75 overflow-y-auto backdrop-blur-sm"
+        style="height: calc(100vh - 100px);border-right: none;"
+        class="shadow bg-white/75 w-full dark:bg-black/75 overflow-y-auto backdrop-blur-sm"
         :default-active="activeIndex"
         :collapse="sideCollapse"
       >
