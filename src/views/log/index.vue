@@ -45,6 +45,11 @@
       field="message"
       title="操作信息"
     />
+    <vxe-column title="操作时间">
+      <template #default="{ row }">
+        {{ $filters.formatDate(row.createTime) }}
+      </template>
+    </vxe-column>
   </vxe-table>
   <div class="flex justify-end mt-4">
     <el-pagination

@@ -45,14 +45,17 @@
         field="name"
         title="菜单名称"
         tree-node
+        width="160"
       />
       <vxe-column
         field="icon"
         title="图标"
+        width="80"
       />
       <vxe-column
         field="hidden"
         title="显示状态"
+        width="80"
       >
         <template #default="{ row }">
           <dict-el-tag
@@ -65,6 +68,7 @@
       <vxe-column
         field="status"
         title="是否启用"
+        width="80"
       >
         <template #default="{ row }">
           <dict-el-tag
@@ -85,12 +89,17 @@
       <vxe-column
         field="sort"
         title="排序"
+        width="80"
         sortable
       />
       <vxe-column
         field="date"
         title="创建时间"
-      />
+      >
+        <template #default="{ row }">
+          {{ $filters.formatDate(row.createTime) }}
+        </template>
+      </vxe-column>
       <vxe-column
         title="操作"
         width="180"
