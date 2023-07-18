@@ -20,3 +20,13 @@ export const getDictLabel = (dict = [], code) => {
   })
   return dictMap[code]
 }
+
+export const getDictValue = (dict = [], label) => {
+  if (!dict)
+    return ''
+  const dictMap = {}
+  dict.forEach((item) => {
+    dictMap[item.label] = item.value
+  })
+  return dictMap[label]
+}
