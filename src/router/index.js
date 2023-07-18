@@ -25,10 +25,10 @@ const routes = [{
     },
   }],
 },
-{
-  path: '/:catchAll(.*)',
-  redirect: '/404',
-},
+// {
+//   path: '/:catchAll(.*)',
+//   redirect: '/404',
+// },
 ]
 const router = createRouter({
   history: createWebHistory(),

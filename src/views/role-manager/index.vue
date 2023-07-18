@@ -6,18 +6,6 @@
     />
   </div>
   <div class="bg-white rounded-md py-4 px-4">
-    <!-- <div class="my-4">
-      <el-button
-        link
-        type="primary"
-        @click="handleAddClick"
-      >
-        <div
-          class="i-carbon-add text-2xl"
-        />新增
-      </el-button>
-    </div> -->
-
     <vxe-toolbar>
       <template #buttons>
         <el-button

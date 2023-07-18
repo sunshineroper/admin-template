@@ -83,4 +83,20 @@ export class Admin {
   static getLogList(query) {
     return get(`admin/log/getList?${qs.stringify(query)}`)
   }
+
+  static addOrEditBtn(body) {
+    return post('admin/btn/add', body)
+  }
+
+  static getBtnPageList(query) {
+    return get(`admin/btn/getBtnPageList?${qs.stringify(query)}`)
+  }
+
+  static validatorUniqueIdentity(query) {
+    return get(`admin/btn/validatorUniqueIdentity?${qs.stringify(query)}`)
+  }
+
+  static deleteBtn(id) {
+    return _delete(`admin/btn/${id}`)
+  }
 }
