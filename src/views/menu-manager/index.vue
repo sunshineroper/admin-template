@@ -146,6 +146,7 @@ import { Admin as AdminApi } from '@/api/admin'
 import dictElTag from '@/components/dict-el-tag/index.vue'
 
 const loading = ref(true)
+
 const dialogVisible = ref(false)
 const selectVal = ref({})
 const tableData = ref([])

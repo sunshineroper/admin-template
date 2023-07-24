@@ -85,7 +85,7 @@ const dispathBtn = (id) => {
 
 const isShowDispathBtn = computed(() => {
   return (row, node) => {
-    return row.pid !== 0 && node.checked
+    return (row.pid !== 0 || row.type === 2) && node.checked
   }
 })
 

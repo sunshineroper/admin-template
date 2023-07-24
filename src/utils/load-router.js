@@ -11,10 +11,11 @@ export const loadRouter = (router, routerList = []) => {
     if (item !== MENU_FOLDER) {
       item.component = module[`/src/views/${item.component_path}.vue`]
       item.path = item.router_url
-
+      item.name = item.router_name
       item.meta = {
         title: item.title,
         icon: item.icon,
+        role_btn_list: item.role_btn_list || [],
       }
     }
   })

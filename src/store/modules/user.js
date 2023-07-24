@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
-import { useCookies } from '@vueuse/integrations/useCookies'
 import { treeSort } from '../../utils/util'
 import { getMatchedTitle, normaizeHiddenTree, normalizeTree } from '@/utils/util'
 
-const cookies = useCookies(['locale'])
 export const userStore = defineStore('user', {
   state: () => {
     return {

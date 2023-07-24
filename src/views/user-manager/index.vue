@@ -33,6 +33,7 @@
   <div class="bg-white rounded-md py-4 px-4">
     <div class="my-4">
       <el-button
+        v-auth="authBtn.add"
         link
         type="primary"
         @click="handleClickAdd"
@@ -154,6 +155,9 @@ import { onMounted, ref, watch } from 'vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import addEdit from './add-edit.vue'
 import { User as userApi } from '@/api/user'
+import useAuthBtn from '@/utils/useAuthBtn'
+
+const authBtn = useAuthBtn()
 
 const isVisible = ref(false)
 const selectVal = ref({})
