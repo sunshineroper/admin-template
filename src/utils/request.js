@@ -39,6 +39,30 @@ service.interceptors.request.use((config) => {
   if (config.url === 'admin/user/refreshToken')
     config.headers.authorization = `Bearer ${useLocalStorage('refreshToken', '').value}`
 
+  if (config.method === 'post') {
+    let hasFile = false
+    if (!config.data)
+      config.data = {}
+      // 判断是否是文件上传
+    if (config.data) {
+      Object.keys(config.data).forEach((key) => {
+        const item = config.data[key]
+        if (typeof item === 'object') {
+          if (item instanceof File)
+            hasFile = true
+        }
+      })
+      if (hasFile) {
+        const formData = new FormData()
+        Object.keys(config.data).forEach((key) => {
+          const item = config.data[key]
+          formData.append(key, item)
+        })
+        config.data = formData
+      }
+    }
+  }
+
   return config
 })
 service.interceptors.response.use((response) => {
