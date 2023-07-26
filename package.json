@@ -25,7 +25,9 @@
     "vue": "^3.2.47",
     "vue-router": "4",
     "vxe-table": "^4.4.1",
-    "xe-utils": "^3.5.11"
+    "xe-utils": "^3.5.11",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.3",
