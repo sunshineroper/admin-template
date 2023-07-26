@@ -44,7 +44,10 @@ const fmtTile = (title, router) => {
     result.forEach((item) => {
       const key = item.match(reg)[1]
       const value = router.params[key] || router.query[key]
-      title = title.replace(item, value)
+      if (value)
+        title = title.replace(item, value)
+      else
+        title = title.replace(item, '')
     })
   }
   return title
