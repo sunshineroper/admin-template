@@ -5,6 +5,7 @@
   ],
   "rules": {
     "vue/multi-word-component-names": "off",
+    "vue/no-v-model-argument": "off",
     "import/named": "off",
     "antfu/top-level-function": "off",
     "no-invalid-this": "off",
