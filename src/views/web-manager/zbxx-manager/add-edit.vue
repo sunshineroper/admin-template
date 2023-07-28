@@ -44,7 +44,6 @@
           trigger: 'blur',
         }"
       >
-        {{ form }} -
         <dict-el-radio
           v-model="form.status"
           dict-status-type="status"
@@ -109,9 +108,10 @@ import notification from '@/utils/dict-notification'
 import { Upload as uploadApi } from '@/api/upload'
 
 const form = ref({
-  content: '',
-  attachment_id: [],
   status: 1,
+  content: '22',
+  attachment_id: [],
+
 })
 
 const formRef = ref()
