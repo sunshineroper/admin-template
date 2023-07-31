@@ -66,7 +66,7 @@
         width="120"
       />
       <vxe-column
-        filfielded="usercode"
+        field="usercode"
         title="账号"
       />
       <vxe-column

@@ -18,7 +18,7 @@
             message: '请输入用户名'
           }]"
         >
-          <el-input v-model="login.name" />
+          <el-input v-model="login.user_code" />
           <div class="absolute right-4">
             <el-icon><User /></el-icon>
           </div>
@@ -72,7 +72,7 @@ import { userStore } from '@/store/modules/user'
 const router = useRouter()
 const store = userStore()
 const login = ref({
-  name: 'Sunshine',
+  user_code: 'Sunshine',
   password: 'Sunshine123!',
 })
 const loading = ref(false)

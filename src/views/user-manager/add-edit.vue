@@ -32,28 +32,6 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item
-        label="用户角色"
-        prop="role_id"
-      >
-        <el-select
-          v-model="form.role_id"
-          multiple
-          filterable
-          allow-create
-          default-first-option
-          :reserve-keyword="false"
-          placeholder="请选择用户角色"
-        >
-          <el-option
-            v-for="item in roleList"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-            :disabled="!item.status"
-          />
-        </el-select>
-      </el-form-item>
       <el-row :gutter="8">
         <el-col :span="12">
           <el-form-item
@@ -64,12 +42,12 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <!-- <el-form-item
-            label="部门"
-            prop="de"
+          <el-form-item
+            label="登录账号"
+            prop="user_code"
           >
-            <el-input v-model="form.d" />
-          </el-form-item> -->
+            <el-input v-model="form.user_code" />
+          </el-form-item>
         </el-col>
         <el-form-item
           label="状态"
@@ -96,6 +74,28 @@
           </el-radio-group>
         </el-form-item>
       </el-row>
+      <el-form-item
+        label="用户角色"
+        prop="role_id"
+      >
+        <el-select
+          v-model="form.role_id"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          :reserve-keyword="false"
+          placeholder="请选择用户角色"
+        >
+          <el-option
+            v-for="item in roleList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+            :disabled="!item.status"
+          />
+        </el-select>
+      </el-form-item>
     </el-form>
     <template #footer>
       <div>
