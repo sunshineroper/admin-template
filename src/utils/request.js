@@ -36,7 +36,7 @@ service.interceptors.request.use((config) => {
     requestPending(config)
   config.headers.authorization = `Bearer ${useLocalStorage('accessToken', '').value}`
   config.headers['Content-Type'] = 'application/json'
-  if (config.url === 'admin/user/refreshToken')
+  if (config.url === 'user/refreshToken')
     config.headers.authorization = `Bearer ${useLocalStorage('refreshToken', '').value}`
 
   if (config.method === 'post') {
@@ -74,7 +74,7 @@ service.interceptors.response.use((response) => {
     return data
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    let { code, message } = data
+    const { code, message } = data
     const store = userStore()
     if (code === 10041 || code === 10051) {
       const cache = {}
@@ -87,7 +87,11 @@ service.interceptors.response.use((response) => {
       resolve(result)
     }
     if (tokenErrorCode.includes(code)) {
-      message = '登录过期请重新登录'
+      ElNotification({
+        title: 'Tips',
+        message: '登录过期请重新登录',
+        type: 'error',
+      })
       store.changeLoginOut()
       const { origin } = window.location
       window.location.href = origin
