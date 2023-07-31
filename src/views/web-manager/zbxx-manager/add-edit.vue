@@ -3,7 +3,7 @@
     v-model="isVisible"
     :title="title"
     width="60%"
-    :close="handleClose"
+    @close="handleClose"
   >
     <el-form
       ref="formRef"
@@ -21,34 +21,52 @@
         <el-input v-model="form.title" />
       </el-form-item>
       <el-form-item
-        label="项目分类"
-        prop="content"
+        label="项目编号"
+        prop="title"
         :rules="{
           required: true,
-          message: '公告内容不能为空',
+          message: '项目编号不能为空',
           trigger: 'blur',
         }"
       >
-        <dict-el-select
-          v-model="form.class_id"
-          dict-status-type="zbxx_class"
-          placeholder="请选择公告分类"
-        />
+        <el-input v-model="form.project_code" />
       </el-form-item>
-      <el-form-item
-        label="公告状态"
-        prop="content"
-        :rules="{
-          required: true,
-          message: '公告状态不能为空',
-          trigger: 'blur',
-        }"
-      >
-        <dict-el-radio
-          v-model="form.status"
-          dict-status-type="status"
-        />
-      </el-form-item>
+      <el-row :gutter="24">
+        <el-col :span="12">
+          <el-form-item
+            label="项目分类"
+            prop="class_id"
+            :rules="{
+              required: true,
+              message: '项目分类',
+              trigger: 'blur',
+            }"
+          >
+            <dict-el-select
+              v-model="form.class_id"
+              dict-status-type="zbxx_class"
+              placeholder="请选择公告分类"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item
+            label="公告状态"
+            prop="status"
+            :rules="{
+              required: true,
+              message: '公告状态不能为空',
+              trigger: 'blur',
+            }"
+          >
+            <dict-el-radio
+              v-model="form.status"
+              dict-status-type="status"
+            />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-form-item
         label="公告内容"
         prop="content"
@@ -58,11 +76,13 @@
           trigger: 'blur',
         }"
       >
-        <editor v-model="form.content" />
+        <editor
+          v-model="form.content"
+          :height="250"
+        />
       </el-form-item>
       <el-form-item
         label="附件"
-        prop="content"
       >
         <el-upload
           v-model:file-list="form.notice_attachment"
@@ -106,6 +126,7 @@ import { useCloned, useVModel } from '@vueuse/core'
 import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
 import notification from '@/utils/dict-notification'
 import { Upload as uploadApi } from '@/api/upload'
+import { TenderNotice as TenderNoticeApi } from '@/api/tender-notice'
 
 const form = ref({
   status: 1,
@@ -148,6 +169,7 @@ const handleClose = () => {
   form.value = {
     status: 1,
     attachment_id: [],
+    content: '',
   }
 }
 
@@ -175,11 +197,17 @@ const handleFileRemove = async (file, files) => {
   form.value.attachment_id = files.map(f => f.response[0].id)
 }
 
-watch(() => props.selectVal, (obj) => {
+const getContentAndFile = async () => {
+  const { content, notice_attachment = [] } = await TenderNoticeApi.getContentAndFile(form.value.id)
+  form.value.content = content
+  form.value.attachment_id = notice_attachment.map(item => item.id)
+  form.value.notice_attachment = notice_attachment
+}
+watch(() => props.selectVal, async (obj) => {
   if (obj.id) {
     const { cloned } = useCloned(obj)
     form.value = cloned.value
-    form.value.attachment_id = form.value.notice_attachment.map(item => item.id)
+    await getContentAndFile()
   }
 }, { deep: true })
 </script>
