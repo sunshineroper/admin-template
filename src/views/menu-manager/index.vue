@@ -75,11 +75,6 @@
             :status="row.status"
             dict-status-type="status"
           />
-          <!-- <el-tag
-            :type="row.status ? 'success' : 'error'"
-          >
-            {{ row.status ? '启用' : '禁用' }}
-          </el-tag> -->
         </template>
       </vxe-column>
       <vxe-column
@@ -144,6 +139,7 @@ import addEdit from './add-edit.vue'
 import searchTools from '@/components/search-tools/index.vue'
 import { Admin as AdminApi } from '@/api/admin'
 import dictElTag from '@/components/dict-el-tag/index.vue'
+import notification from '@/utils/dict-notification'
 
 const loading = ref(true)
 
@@ -184,18 +180,10 @@ const handleDeleteClick = (row) => {
     })
       .then(async () => {
         const { code, message } = await AdminApi.deleteMenu(row.id)
-        if (code < 100) {
-          ElNotification({
-            title: 'Tips',
-            message,
-            type: 'success',
-          })
-        }
-        loading.value = false
-        await getMenuList()
-      })
-      .catch(() => {
-        // catch error
+        notification(code, message).then(async () => {
+          await getMenuList()
+        })
+      }).catch(() => {
         loading.value = false
       })
   }

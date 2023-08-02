@@ -11,8 +11,8 @@ import { getDict, getDictLabel } from '@/utils/dict'
 
 const props = defineProps({
   status: {
-    type: Number || String,
-    default: 0,
+    type: String,
+    default: '0',
     required: true,
   },
   dictStatusType: {
@@ -23,13 +23,13 @@ const props = defineProps({
   },
 })
 
-const _status = ref(0)
+const _status = ref('0')
 const defaultStatusDict = ref([{
   label: '启用',
-  value: 1,
+  value: '1',
 }, {
   label: '禁用',
-  value: 0,
+  value: '0',
 }])
 
 const defaultTypeDict = ref([{

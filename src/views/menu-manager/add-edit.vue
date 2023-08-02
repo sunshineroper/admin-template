@@ -230,14 +230,14 @@ const handleTypeChange = (val) => {
   else {
     rules.value = commonRules
     rules.value.router_name = { required: true, trigger: 'blur', validator: validateRouterName }
+    formRef.value.resetFields()
   }
-  formRef.value.resetFields()
 }
 
 const reset = () => {
   form.value = {
     type: 1,
-    status: 1,
+    status: '1',
     hidden: 0,
     pid: 0,
   }
