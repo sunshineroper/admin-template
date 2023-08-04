@@ -1,21 +1,27 @@
 <template>
-  <div
-    :class="[hasTagsTable ? 'pt-[104px]' : 'pt-[65px]', sideCollapseCls]"
-    class="flex flex-col relative bottom-0 h-full ml-[200px] main-content"
+  <el-scrollbar
+    :class="hasTagsTable ? sideCollapseCls : ''"
+    class="flex flex-col relative bottom-0 h-full bg-[#f0f2f5] ml-[200px] main-content"
   >
-    <div class="flex-1 h-full bg-[#f0f2f5] py-6 px-8 ">
+    <div
+      :class="[hasTagsTable ? 'pt-[125px]' : 'pt-[65px]']"
+      class="flex-1 h-full  py-6 px-8 "
+    >
       <router-view v-slot="{ Component }">
-        <!-- <transition
+        <keep-alive :include="['API-Manager', 'add-edit-dictdetail']">
+          <component :is="Component" />
+        </keep-alive>
+      <!-- <transition
           name="move"
           mode="out-in"
         > -->
-        <!-- <keep-alive> -->
-        <component :is="Component" />
-        <!-- </keep-alive> -->
-        <!-- </transition> -->
+      <!-- <keep-alive> -->
+      <!-- <component :is="Component" /> -->
+      <!-- </keep-alive> -->
+      <!-- </transition> -->
       </router-view>
     </div>
-  </div>
+  </el-scrollbar>
 </template>
 <script setup>
 import { computed } from 'vue'
