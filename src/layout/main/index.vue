@@ -1,11 +1,13 @@
 <template>
   <el-scrollbar
+    ref="scrollbarRef"
     :class="hasTagsTable ? sideCollapseCls : ''"
-    class="flex flex-col relative bottom-0 h-full bg-[#f0f2f5] ml-[200px] main-content"
+    class="flex flex-col relative bottom-0 h-full bg-[#f0f2f5] ml-[200px] main-content "
+    @scroll="scroll"
   >
     <div
       :class="[hasTagsTable ? 'pt-[125px]' : 'pt-[65px]']"
-      class="flex-1 h-full  py-6 px-8 "
+      class="flex-1 h-full  py-6 px-8 main"
     >
       <router-view v-slot="{ Component }">
         <keep-alive :include="['API-Manager', 'add-edit-dictdetail']">
@@ -24,9 +26,10 @@
   </el-scrollbar>
 </template>
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { appStore } from '@/store/modules/app'
 
+const scrollbarRef = ref()
 const app = appStore()
 const hasTagsTable = computed(() => app.hasTagsTable)
 const sideCollapseCls = computed(() => {
