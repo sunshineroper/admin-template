@@ -7,14 +7,17 @@
       <el-avatar
         :src="userInfo.avatar"
       />
-      <span class="text-base">
+      <span class="text-base ml-1">
         {{ userInfo.name }}
       </span>
       <div class="i-ic-outline-arrow-drop-down text-sm" />
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item :icon="User">
+        <el-dropdown-item
+          command="profile"
+          :icon="User"
+        >
           个人信息
         </el-dropdown-item>
         <el-dropdown-item
@@ -64,6 +67,8 @@ const loginOut = () => {
 const handleCommand = (val) => {
   if (val === 'loginOut')
     loginOut()
+  if (val === 'profile')
+    router.push('/profile')
 }
 
 </script>

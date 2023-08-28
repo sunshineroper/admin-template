@@ -93,7 +93,11 @@
     <vxe-column
       field="class_id"
       title="项目分类"
-    />
+    >
+      <template #default="{row}">
+        {{ getClassName(row.class_id) }}
+      </template>
+    </vxe-column>
     <vxe-column
       field="created_name"
       title="创建人"
@@ -167,11 +171,12 @@
   />
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import addEdit from './add-edit.vue'
 import { TenderNotice as TenderNoticeApi } from '@/api/tender-notice'
 import notification from '@/utils/dict-notification'
 import useAuthBtn from '@/utils/useAuthBtn'
+import { getDict, getDictLabel } from '@/utils/dict'
 
 const authBtn = useAuthBtn()
 const q = ref({
@@ -232,6 +237,12 @@ const onClickRefresh = async () => {
   await getList()
 }
 
+const getClassName = computed(() => {
+  return (type) => {
+    const dict = getDict('zbxx_class')
+    return getDictLabel(dict, type)
+  }
+})
 const shortcuts = [
   {
     text: '上周',

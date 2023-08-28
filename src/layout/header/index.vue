@@ -9,6 +9,7 @@
         <bread-crumb class="py-0.5 ml-4" />
       </div>
       <tools />
+      <notify />
       <avatar />
     </div>
     <tags-tab />
@@ -21,6 +22,7 @@ import breadCrumb from './bread-crumb.vue'
 import tools from './tools.vue'
 import avatar from './avatar.vue'
 import tagsTab from './tags-tab/index.vue'
+import notify from './notify.vue'
 import { appStore } from '@/store/modules/app'
 
 const appstore = appStore()

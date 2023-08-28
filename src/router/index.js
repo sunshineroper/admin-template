@@ -23,6 +23,20 @@ const routes = [{
     meta: {
       title: '404',
     },
+  }, {
+    path: '/notify',
+    name: 'notify',
+    component: () => import('@/views/notify/notify.vue'),
+    meta: {
+      title: '系统通知',
+    },
+  }, {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@/views/profile/profile.vue'),
+    meta: {
+      title: '个人信息',
+    },
   }],
 },
 // {

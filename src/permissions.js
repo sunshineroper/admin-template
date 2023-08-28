@@ -29,7 +29,6 @@ router.beforeEach(async (to, from, next) => {
       loadRouter(router, store.roleRouter)
       next({ path: to.path })
     }
-
     next()
     NProgress.done()
   }
