@@ -1,7 +1,7 @@
 <template>
   <el-sub-menu
     v-if="routerInfo.children && routerInfo.children.length > 0"
-    :index="routerInfo.name"
+    :index="routerInfo.router_name"
   >
     <template #title>
       <div class="mr-1 i-carbon-menu" />
@@ -15,7 +15,7 @@
   </el-sub-menu>
   <el-menu-item
     v-else
-    :index="routerInfo.name"
+    :index="routerInfo.router_name"
     @click="handleClick"
   >
     <div class="mr-1 i-carbon-menu" />
