@@ -184,13 +184,14 @@ const form = ref({
   pid: 0,
 })
 const validateRouterName = async (rule, value, callback) => {
-  if (!value)
-    callback(new Error('路由名称不能为空'))
-  const menu = await AdminApi.getMenuByRouterName({ router_name: value, id: form.value.id })
-  if (Object.keys(menu).length > 0)
-    callback(new Error('路由名称不能和其它菜单的重复'))
+  if (!value) { callback(new Error('路由名称不能为空')) }
+  else {
+    const menu = await AdminApi.getMenuByRouterName({ router_name: value, id: form.value.id })
+    if (Object.keys(menu).length > 0)
+      callback(new Error('路由名称不能和其它菜单的重复'))
 
-  callback()
+    callback()
+  }
 }
 const MENU_FOLDER = 1
 const store = userStore()
@@ -230,7 +231,7 @@ const handleTypeChange = (val) => {
   else {
     rules.value = commonRules
     rules.value.router_name = { required: true, trigger: 'blur', validator: validateRouterName }
-    formRef.value.resetFields()
+    formRef.value.clearValidate()
   }
 }
 
@@ -241,7 +242,7 @@ const reset = () => {
     hidden: 0,
     pid: 0,
   }
-  formRef.value && formRef.value.resetFields()
+  formRef.value && formRef.value.clearValidate()
 }
 
 const emits = defineEmits(['update:modelValue', 'onConfirm'])

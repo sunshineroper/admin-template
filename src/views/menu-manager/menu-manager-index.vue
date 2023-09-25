@@ -45,7 +45,7 @@
         field="name"
         title="菜单名称"
         tree-node
-        width="160"
+        width="180"
       />
       <vxe-column
         field="icon"
@@ -78,10 +78,6 @@
         </template>
       </vxe-column>
       <vxe-column
-        field="router_name"
-        title="路由名称"
-      />
-      <vxe-column
         field="sort"
         title="排序"
         width="80"
@@ -90,6 +86,7 @@
       <vxe-column
         field="date"
         title="创建时间"
+        width="160"
       >
         <template #default="{ row }">
           {{ $filters.formatDate(row.createTime) }}
@@ -97,7 +94,7 @@
       </vxe-column>
       <vxe-column
         title="操作"
-        width="180"
+        width="160"
       >
         <template #default="{ row }">
           <el-button
